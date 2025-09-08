@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="dash-hero">
+	<div>
+		<h2 class="title">Admin Dashboard</h2>
+		<p class="subtitle">Quick stats and management</p>
+	</div>
+	<div><a class="btn ghost" href="{{ url_for('admin.logout') }}">Logout</a></div>
+</div>
+
+<div class="stat-grid">
+	<div class="stat"><div class="label">Total Users</div><div class="value">{{ total_users }}</div></div>
+	<div class="stat"><div class="label">Total Matches</div><div class="value">{{ total_matches }}</div></div>
+	<div class="stat"><div class="label">Messages</div><div class="value">{{ total_msgs }}</div></div>
+	<div class="stat"><div class="label">Status</div><div class="value">OK</div></div>
+</div>
+
+<div class="card">
+	<h3 class="title">Coming soon</h3>
+	<p>Moderation tools, user search, takedowns, and more.</p>
+</div>
+{% endblock %}

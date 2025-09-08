@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Create Profile</h2>
+<form method="post" class="form">
+	<label class="field">Age
+		<input class="input" type="number" name="age" min="13" max="100" required>
+	</label>
+	<label class="field">Gender
+		<select class="input" name="gender" required>
+			<option value="Male">Male</option>
+			<option value="Female">Female</option>
+		</select>
+	</label>
+	<label class="field">Bio
+		<textarea class="input" name="bio" maxlength="500" rows="4" required></textarea>
+	</label>
+	<label class="field">Playstyle
+		<input class="input" type="text" name="playstyle" placeholder="Casual / Competitive / Mixed" required>
+	</label>
+	<label class="field">Servers
+		<input class="input" type="text" name="servers" placeholder="US East, EU West">
+	</label>
+	<button class="btn" type="submit">Save</button>
+</form>
+{% endblock %}

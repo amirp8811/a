@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Edit Profile</h2>
+<form method="post" class="form">
+	<label class="field">Age
+		<input class="input" type="number" name="age" min="13" max="100" value="{{ user.age or '' }}" required>
+	</label>
+	<label class="field">Gender
+		<select class="input" name="gender" required>
+			<option value="Male" {% if (user.gender or '') == 'Male' %}selected{% endif %}>Male</option>
+			<option value="Female" {% if (user.gender or '') == 'Female' %}selected{% endif %}>Female</option>
+		</select>
+	</label>
+	<label class="field">Bio
+		<textarea class="input" name="bio" maxlength="500" rows="4" required>{{ user.bio or '' }}</textarea>
+	</label>
+	<label class="field">Playstyle
+		<input class="input" type="text" name="playstyle" value="{{ user.playstyle or '' }}" required>
+	</label>
+	<label class="field">Servers
+		<input class="input" type="text" name="servers" value="{{ (user.server_preferences or '') }}">
+	</label>
+	<button class="btn" type="submit">Save</button>
+</form>
+{% endblock %}

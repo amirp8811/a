@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="landing">
+	<div class="landing-hero">
+		<div class="landing-copy">
+			<h1 class="landing-title">Find your perfect Anomic duo</h1>
+			<p class="landing-sub">Roblox-verified profiles, clean swiping, and matches that actually lead to games.</p>
+			<div class="cta">
+				<a class="btn" href="{{ url_for('auth.register') }}">Get started</a>
+				<a class="btn outline" href="{{ url_for('auth.login') }}">I already have an account</a>
+			</div>
+			<div class="trust">
+				<span class="badge">Roblox Verified</span>
+				<span class="badge">Private & Secure</span>
+				<span class="badge">Free to use</span>
+			</div>
+		</div>
+		<div class="landing-art">
+			<div class="orb orb-a"></div>
+			<div class="orb orb-b"></div>
+			<div class="glass-card">
+				<h3>Why AnomiDate?</h3>
+				<ul>
+					<li>Real Roblox accounts (bio-verification)</li>
+					<li>Swipe smarter with simple filters</li>
+					<li>Match and chat instantly</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="features grid cols-3">
+		<div class="feature-card">
+			<h4>Verified by Roblox</h4>
+			<p>We check bios for a unique phrase so you know who you're meeting is real.</p>
+		</div>
+		<div class="feature-card">
+			<h4>Swipe that makes sense</h4>
+			<p>Age, playstyle, and server preferences help you discover compatible partners.</p>
+		</div>
+		<div class="feature-card">
+			<h4>Built for gaming</h4>
+			<p>Mutual matches, messaging, and sessions — everything you need to squad up.</p>
+		</div>
+	</div>
+
+	<div class="callout card">
+		<h3 class="title">Ready to meet your duo?</h3>
+		<p>Create an account, verify in seconds, and start swiping.</p>
+		<a class="btn" href="{{ url_for('auth.register') }}">Create free account</a>
+	</div>
+</section>
+{% endblock %}

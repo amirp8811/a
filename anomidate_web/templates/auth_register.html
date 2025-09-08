@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="auth-wrap">
+	<div class="auth-card">
+		<h2>Create your account</h2>
+		<p class="muted">Join AnomiDate to find your verified Anomic duo.</p>
+		<form class="form" method="post">
+			<div class="field">
+				<input class="input" type="text" name="username" placeholder="Username" required>
+			</div>
+			<div class="field">
+				<input class="input" type="email" name="email" placeholder="Email (optional)">
+			</div>
+			<div class="field">
+				<input class="input" type="password" name="password" placeholder="Password (8+ characters)" minlength="8" required>
+			</div>
+			<button class="btn" type="submit">Create account</button>
+		</form>
+		<div class="auth-switch">
+			<span class="muted">Already have an account?</span>
+			<a class="link-cta" href="{{ url_for('auth.login') }}">Log in</a>
+		</div>
+	</div>
+</section>
+{% endblock %}

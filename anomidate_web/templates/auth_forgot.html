@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="auth-wrap">
+	<div class="auth-card">
+		<h2>Forgot password</h2>
+		<p class="muted">Enter your email and we'll send you a reset code.</p>
+		<form class="form" method="post">
+			<label class="field">Email
+				<input type="email" name="email" placeholder="you@example.com" required>
+			</label>
+			<button class="btn" type="submit">Send code</button>
+		</form>
+	</div>
+</section>
+{% endblock %}

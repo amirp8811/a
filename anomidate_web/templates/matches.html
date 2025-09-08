@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Your Matches</h2>
+{% if matches %}
+<div class="grid cols-2">
+	{% for m in matches %}
+		<div class="card">
+			<strong>{{ m.username }}</strong>
+			<div style="margin-top:0.5rem;">
+				<a class="btn" href="{{ url_for('matches.conversation', other_id=m.id) }}">Open chat</a>
+			</div>
+		</div>
+	{% endfor %}
+</div>
+{% else %}
+<p class="muted">No matches yet. Keep swiping!</p>
+{% endif %}
+{% endblock %}

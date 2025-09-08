@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>My Profile</h2>
+<div class="profile-grid">
+	<div class="card">
+		<div class="profile-header" style="align-items:flex-start;">
+			{% if avatar_url %}
+				<img class="avatar" style="width:108px;height:108px;" src="{{ avatar_url }}" alt="avatar"/>
+			{% endif %}
+			<div>
+				<h3 style="margin:0;">{{ user.username }}</h3>
+				<p class="muted" style="margin:0.25rem 0 0;">
+					{% if is_verified %}
+						<span class="badge success">Verified</span>
+					{% else %}
+						<span class="badge warn">Not Verified</span>
+					{% endif %}
+					{% if roblox_username %}<span class="badge" style="margin-left:0.35rem;">@{{ roblox_username }}</span>{% endif %}
+				</p>
+			</div>
+		</div>
+		<div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+			<a class="btn" href="{{ url_for('profile.edit_profile') }}">Edit Profile</a>
+			<a class="btn ghost" href="{{ url_for('profile.verify_roblox') }}">Verify Roblox</a>
+		</div>
+	</div>
+
+	<div class="card">
+		<h3 class="title">Details</h3>
+		<ul class="kv">
+			<li><span>Age</span><strong>{{ user.age or '—' }}</strong></li>
+			<li><span>Gender</span><strong>{{ user.gender or '—' }}</strong></li>
+			<li><span>Playstyle</span><strong>{{ user.playstyle or '—' }}</strong></li>
+			<li><span>Servers</span><strong>{{ ', '.join(server_prefs) if server_prefs else '—' }}</strong></li>
+			<li><span>Timezone</span><strong>{{ user.timezone or '—' }}</strong></li>
+			<li><span>Availability</span><strong>{{ user.availability or '—' }}</strong></li>
+		</ul>
+	</div>
+</div>
+
+<div class="card" style="margin-top:1rem;">
+	<h3 class="title">About</h3>
+	<p style="margin:0;">{{ user.bio or 'No bio yet.' }}</p>
+</div>
+{% endblock %}

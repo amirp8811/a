@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Swipe</h2>
+<div class="card animate-in">
+	<div class="profile-header">
+		{% if avatar_url %}
+			<img class="avatar" src="{{ avatar_url }}" alt="avatar"/>
+		{% endif %}
+		<h3>{{ profile.username }}</h3>
+	</div>
+	<ul class="kv">
+		<li><span>Age</span><strong>{{ profile.age or '—' }}</strong></li>
+		<li><span>Gender</span><strong>{{ profile.gender or '—' }}</strong></li>
+		<li><span>Playstyle</span><strong>{{ profile.playstyle or '—' }}</strong></li>
+		<li><span>Servers</span><strong>{{ ', '.join(server_prefs) if server_prefs else '—' }}</strong></li>
+	</ul>
+	<p>{{ profile.bio or '' }}</p>
+	<p>
+		<a class="btn" href="{{ url_for('swipe.like_user', target_id=profile.id) }}">❤️ Like</a>
+		<a class="btn ghost" href="{{ url_for('swipe.pass_user', target_id=profile.id) }}">❌ Pass</a>
+	</p>
+</div>
+{% endblock %}

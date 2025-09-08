@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Chat with {{ other.username }}</h2>
+<div class="card" style="margin-bottom:1rem;">
+	<div class="chat">
+		{% for msg in messages %}
+			<div class="msg" style="padding:0.35rem 0;">
+				<strong>{{ msg.sender_username }}</strong>
+				<div class="muted" style="font-size:0.86rem;">{{ msg.sent_at }}</div>
+				<div style="margin-top:0.25rem;">{{ msg.message_content }}</div>
+				<hr style="border:0;border-top:1px solid #23273a;margin:0.6rem 0;"/>
+			</div>
+		{% endfor %}
+	</div>
+</div>
+<form method="post" class="form">
+	<label class="field">Message
+		<textarea class="input" name="content" required maxlength="1000" rows="3"></textarea>
+	</label>
+	<button class="btn" type="submit">Send</button>
+</form>
+{% endblock %}

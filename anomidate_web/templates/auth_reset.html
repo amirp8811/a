@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="auth-wrap">
+	<div class="auth-card">
+		<h2>Reset password</h2>
+		<p class="muted">Enter the code from your email and choose a new password.</p>
+		<form class="form" method="post">
+			<label class="field">Email
+				<input type="email" name="email" placeholder="you@example.com" required>
+			</label>
+			<label class="field">Reset code
+				<input type="text" name="code" placeholder="Paste your code" required>
+			</label>
+			<label class="field">New password
+				<input type="password" name="password" placeholder="New password" minlength="8" required>
+			</label>
+			<button class="btn" type="submit">Update password</button>
+		</form>
+	</div>
+</section>
+{% endblock %}
