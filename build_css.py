@@ -1,3 +1,32 @@
+#!/usr/bin/env python3
+"""
+Simple CSS builder that combines Tailwind utilities with our custom styles.
+This replaces the CDN approach for production.
+"""
+
+import os
+import subprocess
+import sys
+
+def build_css():
+    """Build production CSS using Tailwind CLI."""
+    try:
+        # Try to run tailwindcss
+        result = subprocess.run([
+            'npx', 'tailwindcss', 
+            '-i', './src/input.css',
+            '-o', './anomidate_web/static/styles.css',
+            '--minify'
+        ], capture_output=True, text=True, check=True)
+        print("✅ CSS built successfully with Tailwind CLI")
+        return True
+    except (subprocess.CalledProcessError, FileNotFoundError) as e:
+        print(f"❌ Tailwind CLI failed: {e}")
+        return False
+
+def create_fallback_css():
+    """Create a fallback CSS file with essential styles."""
+    css_content = """
 /* Essential Tailwind utilities + custom styles */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
@@ -90,5 +119,18 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: #ec4899
 .items-center { align-items: center; }
 .justify-center { justify-content: center; }
 .underline { text-decoration-line: underline; }
-.decoration-white\/40 { text-decoration-color: rgba(255, 255, 255, 0.4); }
-.hover\:decoration-white:hover { text-decoration-color: #ffffff; }
+.decoration-white\\/40 { text-decoration-color: rgba(255, 255, 255, 0.4); }
+.hover\\:decoration-white:hover { text-decoration-color: #ffffff; }
+"""
+    
+    with open('./anomidate_web/static/styles.css', 'w', encoding='utf-8') as f:
+        f.write(css_content.strip())
+    print("✅ Created fallback CSS file")
+    return True
+
+if __name__ == "__main__":
+    print("Building CSS for production...")
+    if not build_css():
+        print("Falling back to custom CSS...")
+        create_fallback_css()
+    print("CSS build complete!")
