@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
 <h2>Verify Roblox</h2>
-<p class="muted">Add "anomidate" to your Roblox bio, then enter your username below to verify.</p>
+<p class="muted">You can verify instantly with Roblox OAuth, or use bio verification.</p>
+<p>
+	<a class="btn" href="{{ url_for('profile.roblox_oauth_login') }}">Sign in with Roblox</a>
+</p>
 <form method="post" class="form">
 	<label class="field">Roblox Username
 		<input class="input" type="text" name="roblox_username" placeholder="Your Roblox username" required>
