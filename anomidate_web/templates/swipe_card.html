@@ -90,15 +90,26 @@ document.addEventListener('DOMContentLoaded', function() {
 		e.preventDefault();
 	}, { passive: false });
 	
+	// Add click handlers for mobile buttons
+	likeBtn.addEventListener('click', (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+		swipeCard('like');
+	});
+	
+	passBtn.addEventListener('click', (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+		swipeCard('pass');
+	});
+	
 	// Mouse events
 	card.addEventListener('mousedown', handleStart);
 	card.addEventListener('mousemove', handleMove);
 	card.addEventListener('mouseup', handleEnd);
 	card.addEventListener('mouseleave', handleEnd);
 	
-	// Button events
-	likeBtn.addEventListener('click', () => swipeCard('like'));
-	passBtn.addEventListener('click', () => swipeCard('pass'));
+	// Button events (removed duplicate handlers)
 	
 	function handleStart(e) {
 		isDragging = true;
