@@ -99,34 +99,9 @@ def create_profile():
 	return render_template("profile_create.html")
 
 
-@profile_bp.route("/verify", methods=["GET", "POST"])
+@profile_bp.route("/verify")
 @login_required
 def verify_roblox():
-	if request.method == "POST":
-		roblox_username = request.form.get("roblox_username", "").strip()
-		flash("Resolving Roblox username...", "success")
-		resolved = resolve_roblox_username(roblox_username)
-		if not resolved:
-			flash("Roblox username not found", "error")
-			return redirect(url_for("profile.verify_roblox"))
-		flash("Found user. Checking bio for verification phrase...", "success")
-		roblox_user_id = int(resolved.get("id"))
-		is_verified = check_roblox_verification(roblox_user_id)
-		flash("Updating your verification status...", "success")
-		conn = connect()
-		cur = conn.cursor()
-		cur.execute(
-			"""
-			INSERT INTO roblox_verification (discord_id, roblox_username, roblox_user_id, is_verified, verified_at)
-			VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)
-			ON CONFLICT(discord_id) DO UPDATE SET roblox_username=excluded.roblox_username, roblox_user_id=excluded.roblox_user_id, is_verified=excluded.is_verified, verified_at=CURRENT_TIMESTAMP
-			""",
-			(str(current_user.id), roblox_username, roblox_user_id, 1 if is_verified else 0),
-		)
-		conn.commit()
-		conn.close()
-		flash("Roblox verified" if is_verified else "Verification phrase not found in bio", "info")
-		return redirect(url_for("profile.view_profile"))
 	return render_template("profile_verify.html")
 
 

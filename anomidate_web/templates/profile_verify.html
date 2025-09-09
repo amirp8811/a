@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>Verify Roblox</h2>
-<p class="muted">You can verify instantly with Roblox OAuth, or use bio verification.</p>
-<p>
-	<a class="btn" href="{{ url_for('profile.roblox_oauth_login') }}">Sign in with Roblox</a>
-</p>
-<form method="post" class="form">
-	<label class="field">Roblox Username
-		<input class="input" type="text" name="roblox_username" placeholder="Your Roblox username" required>
-	</label>
-	<button class="btn" type="submit">Verify</button>
-</form>
+<div class="card">
+	<h2>Verify Roblox Account</h2>
+	<p class="muted">Connect your Roblox account to verify your identity and unlock all features.</p>
+	<div style="text-align: center; margin: 2rem 0;">
+		<a class="btn lg" href="{{ url_for('profile.roblox_oauth_login') }}" style="font-size: 1.1rem; padding: 1rem 2rem;">
+			🔗 Sign in with Roblox
+		</a>
+	</div>
+	<p class="muted" style="font-size: 0.9rem; text-align: center;">
+		This will redirect you to Roblox to securely verify your account.
+	</p>
+</div>
 {% endblock %}
