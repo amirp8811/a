@@ -14,6 +14,7 @@
 		.gaming-bg {
 			background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
 			min-height: 100vh;
+			min-height: calc(var(--vh, 1vh) * 100);
 			position: relative;
 			overflow: hidden;
 		}
@@ -150,21 +151,98 @@
 			bottom: 0;
 			left: 0;
 			right: 0;
-			background: rgba(15, 15, 35, 0.9);
+			background: rgba(15, 15, 35, 0.95);
 			backdrop-filter: blur(20px);
 			border-top: 1px solid rgba(255, 255, 255, 0.1);
 			z-index: 50;
+			padding-bottom: env(safe-area-inset-bottom);
 		}
 		
-		/* Responsive */
+		.mobile-nav-item {
+			position: relative;
+			transition: all 0.2s ease;
+		}
+		
+		.mobile-nav-item.active {
+			color: #8b5cf6;
+		}
+		
+		.mobile-nav-item.active::before {
+			content: '';
+			position: absolute;
+			top: -8px;
+			left: 50%;
+			transform: translateX(-50%);
+			width: 4px;
+			height: 4px;
+			background: #8b5cf6;
+			border-radius: 50%;
+		}
+		
+		/* Touch optimizations */
+		.touch-target {
+			min-height: 44px;
+			min-width: 44px;
+		}
+		
+		/* Mobile-specific styles */
 		@media (max-width: 768px) {
 			.desktop-nav { display: none; }
 			.mobile-nav { display: flex; }
+			
+			/* Adjust main content for mobile nav */
+			main {
+				padding-bottom: 100px;
+			}
+			
+			/* Larger touch targets */
+			.btn {
+				min-height: 48px;
+				padding: 12px 24px;
+			}
+			
+			/* Better spacing on mobile */
+			.glass-card {
+				margin: 0 4px;
+			}
+			
+			/* Swipe card mobile optimizations */
+			.swipe-card {
+				touch-action: pan-y;
+				-webkit-user-select: none;
+				user-select: none;
+			}
+			
+			/* Mobile typography */
+			h1 { font-size: 2.5rem; }
+			h2 { font-size: 2rem; }
+			h3 { font-size: 1.5rem; }
 		}
 		
 		@media (min-width: 769px) {
 			.desktop-nav { display: flex; }
 			.mobile-nav { display: none; }
+		}
+		
+		/* Landscape mobile optimizations */
+		@media (max-width: 768px) and (orientation: landscape) {
+			.mobile-nav {
+				position: relative;
+				bottom: auto;
+				margin-top: 1rem;
+			}
+			
+			main {
+				padding-bottom: 1rem;
+			}
+		}
+		
+		/* Safe area support for notched devices */
+		@supports (padding: max(0px)) {
+			.mobile-nav {
+				padding-left: max(16px, env(safe-area-inset-left));
+				padding-right: max(16px, env(safe-area-inset-right));
+			}
 		}
 		
 		/* Swipe Progress Bar */
@@ -219,22 +297,22 @@
 
 	<!-- Mobile Navigation -->
 	<nav class="mobile-nav">
-		<div class="flex justify-around py-2">
-			<a href="{{ url_for('index') }}" class="flex flex-col items-center p-2 text-gray-400 hover:text-white transition-colors">
-				<i data-lucide="home" class="w-5 h-5"></i>
-				<span class="text-xs mt-1">Home</span>
+		<div class="flex justify-around py-3">
+			<a href="{{ url_for('index') }}" class="mobile-nav-item flex flex-col items-center p-3 text-gray-400 hover:text-white transition-colors touch-target">
+				<i data-lucide="home" class="w-6 h-6"></i>
+				<span class="text-xs mt-1 font-medium">Home</span>
 			</a>
-			<a href="{{ url_for('swipe.swipe_home') }}" class="flex flex-col items-center p-2 text-gray-400 hover:text-white transition-colors">
-				<i data-lucide="heart" class="w-5 h-5"></i>
-				<span class="text-xs mt-1">Swipe</span>
+			<a href="{{ url_for('swipe.swipe_home') }}" class="mobile-nav-item flex flex-col items-center p-3 text-gray-400 hover:text-white transition-colors touch-target">
+				<i data-lucide="heart" class="w-6 h-6"></i>
+				<span class="text-xs mt-1 font-medium">Swipe</span>
 			</a>
-			<a href="{{ url_for('matches.matches_list') }}" class="flex flex-col items-center p-2 text-gray-400 hover:text-white transition-colors">
-				<i data-lucide="users" class="w-5 h-5"></i>
-				<span class="text-xs mt-1">Matches</span>
+			<a href="{{ url_for('matches.matches_list') }}" class="mobile-nav-item flex flex-col items-center p-3 text-gray-400 hover:text-white transition-colors touch-target">
+				<i data-lucide="users" class="w-6 h-6"></i>
+				<span class="text-xs mt-1 font-medium">Matches</span>
 			</a>
-			<a href="{{ url_for('profile.view_profile') }}" class="flex flex-col items-center p-2 text-gray-400 hover:text-white transition-colors">
-				<i data-lucide="user" class="w-5 h-5"></i>
-				<span class="text-xs mt-1">Profile</span>
+			<a href="{{ url_for('profile.view_profile') }}" class="mobile-nav-item flex flex-col items-center p-3 text-gray-400 hover:text-white transition-colors touch-target">
+				<i data-lucide="user" class="w-6 h-6"></i>
+				<span class="text-xs mt-1 font-medium">Profile</span>
 			</a>
 		</div>
 	</nav>
@@ -267,7 +345,9 @@
 		document.addEventListener('DOMContentLoaded', function() {
 			const currentPath = window.location.pathname;
 			const navLinks = document.querySelectorAll('.nav-link');
+			const mobileNavItems = document.querySelectorAll('.mobile-nav-item');
 			
+			// Desktop nav active states
 			navLinks.forEach(link => {
 				if (link.getAttribute('href') === currentPath) {
 					link.classList.add('text-purple-400', 'font-semibold');
@@ -275,7 +355,70 @@
 					link.classList.add('text-gray-300', 'hover:text-white', 'transition-colors');
 				}
 			});
+			
+			// Mobile nav active states
+			mobileNavItems.forEach(item => {
+				const href = item.getAttribute('href');
+				if (href === currentPath || (href === '/' && currentPath === '/index')) {
+					item.classList.add('active');
+				}
+			});
+			
+			// Mobile-specific optimizations
+			if (window.innerWidth <= 768) {
+				// Prevent zoom on input focus
+				const inputs = document.querySelectorAll('input, textarea, select');
+				inputs.forEach(input => {
+					input.addEventListener('focus', function() {
+						if (this.style.fontSize !== '16px') {
+							this.style.fontSize = '16px';
+						}
+					});
+				});
+				
+				// Add touch feedback to buttons
+				const buttons = document.querySelectorAll('.btn, .mobile-nav-item');
+				buttons.forEach(button => {
+					button.addEventListener('touchstart', function() {
+						this.style.transform = 'scale(0.95)';
+					});
+					button.addEventListener('touchend', function() {
+						this.style.transform = '';
+					});
+				});
+			}
+			
+			// Handle orientation change
+			window.addEventListener('orientationchange', function() {
+				setTimeout(() => {
+					// Recalculate viewport height for mobile browsers
+					const vh = window.innerHeight * 0.01;
+					document.documentElement.style.setProperty('--vh', `${vh}px`);
+				}, 100);
+			});
+			
+			// Set initial viewport height
+			const vh = window.innerHeight * 0.01;
+			document.documentElement.style.setProperty('--vh', `${vh}px`);
 		});
+		
+		// Prevent pull-to-refresh on mobile
+		document.addEventListener('touchstart', function(e) {
+			if (e.touches.length !== 1) return;
+			const touch = e.touches[0];
+			window.touchStartY = touch.clientY;
+		});
+		
+		document.addEventListener('touchmove', function(e) {
+			if (e.touches.length !== 1) return;
+			const touch = e.touches[0];
+			const touchY = touch.clientY;
+			const touchStartY = window.touchStartY;
+			
+			if (touchY > touchStartY && window.scrollY === 0) {
+				e.preventDefault();
+			}
+		}, { passive: false });
 	</script>
 	<script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>

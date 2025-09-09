@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="max-w-md mx-auto">
+<div class="max-w-md mx-auto px-4">
 	<!-- Swipe Progress Bar -->
 	<div class="mb-6">
 		<div class="flex items-center justify-between text-sm text-gray-400 mb-2">
@@ -14,7 +14,7 @@
 
 	<!-- Swipe Card Container -->
 	<div class="relative h-96 mb-8">
-		<div id="swipeCard" class="swipe-card glass-card rounded-2xl p-8 h-full flex flex-col justify-between cursor-grab">
+		<div id="swipeCard" class="swipe-card glass-card rounded-2xl p-6 md:p-8 h-full flex flex-col justify-between cursor-grab touch-target">
 			<!-- User Info -->
 			<div class="text-center">
 				<div class="w-24 h-24 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -50,19 +50,20 @@
 	</div>
 
 	<!-- Action Buttons -->
-	<div class="flex justify-center space-x-8">
-		<button id="passBtn" class="w-16 h-16 btn-pass rounded-full flex items-center justify-center hover:scale-110 transition-all duration-200">
-			<i data-lucide="x" class="w-8 h-8"></i>
+	<div class="flex justify-center space-x-8 mb-6">
+		<button id="passBtn" class="w-16 h-16 md:w-20 md:h-20 btn-pass rounded-full flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-200 touch-target">
+			<i data-lucide="x" class="w-8 h-8 md:w-10 md:h-10"></i>
 		</button>
-		<button id="likeBtn" class="w-16 h-16 btn-like rounded-full flex items-center justify-center hover:scale-110 transition-all duration-200">
-			<i data-lucide="heart" class="w-8 h-8 text-white"></i>
+		<button id="likeBtn" class="w-16 h-16 md:w-20 md:h-20 btn-like rounded-full flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-200 touch-target">
+			<i data-lucide="heart" class="w-8 h-8 md:w-10 md:h-10 text-white"></i>
 		</button>
 	</div>
 
 	<!-- Instructions -->
-	<div class="mt-8 text-center text-sm text-gray-400">
-		<p>Drag the card left to pass or right to like</p>
-		<p class="mt-1">Or use the buttons below</p>
+	<div class="text-center text-sm text-gray-400">
+		<p class="hidden md:block">Drag the card left to pass or right to like</p>
+		<p class="md:hidden">Swipe left to pass or right to like</p>
+		<p class="mt-1">Or use the buttons above</p>
 	</div>
 </div>
 
@@ -79,10 +80,15 @@ document.addEventListener('DOMContentLoaded', function() {
 	let currentY = 0;
 	let initialTransform = '';
 	
-	// Touch events
+	// Touch events with better mobile support
 	card.addEventListener('touchstart', handleStart, { passive: false });
 	card.addEventListener('touchmove', handleMove, { passive: false });
 	card.addEventListener('touchend', handleEnd, { passive: false });
+	
+	// Prevent default touch behaviors that interfere with swiping
+	card.addEventListener('touchstart', (e) => {
+		e.preventDefault();
+	}, { passive: false });
 	
 	// Mouse events
 	card.addEventListener('mousedown', handleStart);
@@ -107,6 +113,11 @@ document.addEventListener('DOMContentLoaded', function() {
 		currentY = clientY;
 		
 		initialTransform = card.style.transform;
+		
+		// Add haptic feedback on mobile
+		if (navigator.vibrate) {
+			navigator.vibrate(10);
+		}
 	}
 	
 	function handleMove(e) {
@@ -180,11 +191,17 @@ document.addEventListener('DOMContentLoaded', function() {
 		const newWidth = Math.min(currentWidth + 2, 100);
 		progressBar.style.width = newWidth + '%';
 		
-		// Show feedback
+		// Show feedback with haptic
 		if (action === 'like') {
 			showToast('💜 Liked!', 'success');
+			if (navigator.vibrate) {
+				navigator.vibrate([50, 30, 50]); // Success pattern
+			}
 		} else {
 			showToast('✖️ Passed', 'info');
+			if (navigator.vibrate) {
+				navigator.vibrate(30); // Simple feedback
+			}
 		}
 		
 		// Reset card after animation
