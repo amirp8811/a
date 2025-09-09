@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="dash-hero">
+	<div>
+		<h2 class="title">User #{{ user.id }} — {{ user.username }}</h2>
+		<p class="subtitle">Discord {{ user.discord_id }}</p>
+	</div>
+	<div><a class="btn ghost" href="{{ url_for('admin.users') }}">Back</a></div>
+</div>
+
+<div class="grid-2">
+	<div class="card">
+		<h3 class="title">Profile</h3>
+		<ul class="kv">
+			<li><span>ID</span><span>{{ user.id }}</span></li>
+			<li><span>Username</span><span>{{ user.username }}</span></li>
+			<li><span>Age</span><span>{{ user.age or '-' }}</span></li>
+			<li><span>Gender</span><span>{{ user.gender or '-' }}</span></li>
+			<li><span>Status</span><span>
+				{% if user.banned %}<span class="badge danger">Banned</span>
+				{% elif user.suspended_until %}<span class="badge warn">Suspended until {{ user.suspended_until }}</span>
+				{% else %}<span class="badge ok">Active</span>{% endif %}
+			</span></li>
+			<li><span>Created</span><span>{{ user.created_at }}</span></li>
+		</ul>
+	</div>
+	<div class="card">
+		<h3 class="title">Moderation</h3>
+		<div class="actions">
+			<form method="post" action="{{ url_for('admin.ban_user', user_id=user.id) }}" style="display:inline">
+				<button class="btn danger" {% if user.banned %}disabled{% endif %}>Ban</button>
+			</form>
+			<form method="post" action="{{ url_for('admin.unban_user', user_id=user.id) }}" style="display:inline">
+				<button class="btn" {% if not user.banned %}disabled{% endif %}>Unban</button>
+			</form>
+		</div>
+		<div class="actions">
+			<form method="post" action="{{ url_for('admin.suspend_user', user_id=user.id) }}" class="inline">
+				<input class="input sm" type="number" min="1" name="days" placeholder="Days">
+				<button class="btn warn">Suspend</button>
+			</form>
+			<form method="post" action="{{ url_for('admin.unsuspend_user', user_id=user.id) }}" class="inline">
+				<button class="btn">Clear suspension</button>
+			</form>
+		</div>
+		<div class="actions">
+			<form method="post" action="{{ url_for('admin.delete_user', user_id=user.id) }}" onsubmit="return confirm('Delete this user and all related data?')">
+				<button class="btn danger">Delete User</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="card">
+	<h3 class="title">Stats</h3>
+	<ul class="kv">
+		<li><span>Total messages</span><span>{{ msg_count }}</span></li>
+		<li><span>Total matches</span><span>{{ match_count }}</span></li>
+	</ul>
+</div>
+
+<div class="card">
+	<h3 class="title">Delete Conversation</h3>
+	<form method="post" action="{{ url_for('admin.delete_messages', user_id=user.id) }}" class="form inline">
+		<input class="input" type="text" name="peer_id" placeholder="Peer user id (numeric)">
+		<button class="btn danger">Delete Messages</button>
+	</form>
+</div>
+
+<div class="card">
+	<h3 class="title">Unmatch</h3>
+	<form method="post" action="{{ url_for('admin.unmatch', user_id=user.id) }}" class="form inline">
+		<input class="input" type="text" name="peer_discord_id" placeholder="Peer discord id">
+		<button class="btn warn">Unmatch</button>
+	</form>
+
+	<h4 class="subtitle" style="margin-top:1rem">Recent matches</h4>
+	<table class="table">
+		<thead>
+			<tr><th>ID</th><th>User1</th><th>User2</th><th>Created</th></tr>
+		</thead>
+		<tbody>
+			{% for m in matches %}
+			<tr>
+				<td>{{ m.id }}</td>
+				<td>{{ m.user1_id }}</td>
+				<td>{{ m.user2_id }}</td>
+				<td>{{ m.created_at }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% endblock %}
+
+

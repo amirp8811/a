@@ -57,11 +57,12 @@ def create_app():
 			return redirect(url_for("welcome"))
 		conn = connect()
 		cur = conn.cursor()
+		# Force Roblox verification before any in-app route (except verify page)
 		cur.execute("SELECT roblox_user_id, is_verified FROM roblox_verification WHERE discord_id = ?", (str(current_user.id),))
 		row = cur.fetchone()
 		conn.close()
-		if not row or not row["is_verified"]:
-			if path not in ("/profile/verify",):
+		if not row or not bool(row["is_verified"]):
+			if path not in ("/profile/verify", "/profile/verify", "/profile/verify/"):
 				return redirect(url_for("profile.verify_roblox"))
 		return None
 

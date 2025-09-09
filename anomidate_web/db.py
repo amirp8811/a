@@ -83,6 +83,17 @@ def _migrate(conn: sqlite3.Connection):
 	if "email" not in cols:
 		cur.execute("ALTER TABLE users ADD COLUMN email TEXT")
 		conn.commit()
+	# Add moderation columns if missing
+	cur.execute("PRAGMA table_info(users)")
+	cols = [r[1] for r in cur.fetchall()]
+	if "banned" not in cols:
+		cur.execute("ALTER TABLE users ADD COLUMN banned BOOLEAN DEFAULT FALSE")
+		conn.commit()
+	cur.execute("PRAGMA table_info(users)")
+	cols = [r[1] for r in cur.fetchall()]
+	if "suspended_until" not in cols:
+		cur.execute("ALTER TABLE users ADD COLUMN suspended_until DATETIME")
+		conn.commit()
 	# Password reset table
 	cur.execute(
 		"""
@@ -96,6 +107,26 @@ def _migrate(conn: sqlite3.Connection):
 		)
 		"""
 	)
+	conn.commit()
+	# Roblox verification: add numeric user_id and backfill from discord_id if numeric
+	cur.execute("PRAGMA table_info(roblox_verification)")
+	cols = [r[1] for r in cur.fetchall()]
+	if "user_id" not in cols:
+		cur.execute("ALTER TABLE roblox_verification ADD COLUMN user_id INTEGER")
+		conn.commit()
+		cur.execute("UPDATE roblox_verification SET user_id = CAST(discord_id AS INTEGER) WHERE user_id IS NULL AND discord_id GLOB '[0-9]*'")
+		conn.commit()
+	# Mutual matches: add numeric columns and backfill from existing text ids if numeric
+	cur.execute("PRAGMA table_info(mutual_matches)")
+	cols = [r[1] for r in cur.fetchall()]
+	if "user1_user_id" not in cols:
+		cur.execute("ALTER TABLE mutual_matches ADD COLUMN user1_user_id INTEGER")
+		conn.commit()
+	if "user2_user_id" not in cols:
+		cur.execute("ALTER TABLE mutual_matches ADD COLUMN user2_user_id INTEGER")
+		conn.commit()
+	cur.execute("UPDATE mutual_matches SET user1_user_id = CAST(user1_id AS INTEGER) WHERE user1_user_id IS NULL AND user1_id GLOB '[0-9]*'")
+	cur.execute("UPDATE mutual_matches SET user2_user_id = CAST(user2_id AS INTEGER) WHERE user2_user_id IS NULL AND user2_id GLOB '[0-9]*'")
 	conn.commit()
 
 

@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="dash-hero">
+	<div>
+		<h2 class="title">Users</h2>
+		<p class="subtitle">Search and manage users</p>
+	</div>
+	<div><a class="btn ghost" href="{{ url_for('admin.dashboard') }}">Back</a></div>
+</div>
+
+<form class="form" method="get" action="{{ url_for('admin.users') }}">
+	<div class="field">
+		<input class="input" type="text" name="q" placeholder="Search by username or discord id" value="{{ q }}">
+	</div>
+	<button class="btn" type="submit">Search</button>
+</form>
+
+<div class="card">
+	<table class="table">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Discord</th>
+				<th>Username</th>
+				<th>Age</th>
+				<th>Gender</th>
+				<th>Status</th>
+				<th>Created</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for u in users %}
+			<tr>
+				<td>{{ u.id }}</td>
+				<td>{{ u.discord_id }}</td>
+				<td>{{ u.username }}</td>
+				<td>{{ u.age or '-' }}</td>
+				<td>{{ u.gender or '-' }}</td>
+				<td>
+					{% if u.banned %}<span class="badge danger">Banned</span>{% elif u.suspended_until %}<span class="badge warn">Suspended</span>{% else %}<span class="badge ok">Active</span>{% endif %}
+				</td>
+				<td>{{ u.created_at }}</td>
+				<td><a class="btn sm" href="{{ url_for('admin.user_detail', user_id=u.id) }}">View</a></td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+
+	<div class="pagination">
+		{% if page > 1 %}
+			<a class="btn ghost" href="{{ url_for('admin.users', q=q, page=page-1) }}">Prev</a>
+		{% endif %}
+		<span>Page {{ page }} of {{ pages }}</span>
+		{% if page < pages %}
+			<a class="btn ghost" href="{{ url_for('admin.users', q=q, page=page+1) }}">Next</a>
+		{% endif %}
+	</div>
+</div>
+{% endblock %}
+
+

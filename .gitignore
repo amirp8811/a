@@ -1,0 +1,58 @@
+# Ignore Python cache
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+
+# Ignore database files
+*.db
+*.sqlite
+anomic_dating.db
+
+# Ignore MySQL data directory
+mysql/
+
+# Web stacks and servers not meant for repo
+apache/
+MercuryMail/
+FileZillaFTP/
+phpMyAdmin/
+perl/
+php/
+tomcat/
+webalizer/
+webdav/
+mailoutput/
+mailtodisk/
+sendmail/
+htdocs/
+src/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+*.tmp
+
+# Build outputs
+dist/
+build/
+
+# Misc binaries
+*.exe
+*.dll
+*.dat
+*.pid
+
+# Nested repo or scratch
+a/
+anonymous/incoming/
+
+# Python tooling
+.poetry/
+.pytest_cache/
+.mypy_cache/
+.coverage
+
+# Logs
+*.log

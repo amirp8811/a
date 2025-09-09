@@ -1,25 +1,50 @@
 {% extends 'base.html' %}
 {% block content %}
-<section class="auth-wrap">
-	<div class="auth-card">
-		<h2>Create your account</h2>
-		<p class="muted">Join AnomiDate to find your verified Anomic duo.</p>
-		<form class="form" method="post">
-			<div class="field">
-				<input class="input" type="text" name="username" placeholder="Username" required>
+<div class="auth-bg">
+	<div class="blob b1"></div>
+	<div class="blob b2"></div>
+	<div class="blob b3"></div>
+	<!-- Swirls overlay -->
+	<svg class="swirl s1" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+		<path fill="#60a5fa" d="M100,20 C140,20 180,60 180,100 C180,140 140,160 120,150 C150,130 150,70 100,60 C60,52 40,80 40,100 C40,120 60,140 80,140 C60,150 20,140 20,100 C20,60 60,20 100,20 Z"/>
+	</svg>
+	<svg class="swirl s2" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+		<path fill="#93c5fd" d="M160,100 C160,140 120,180 80,180 C60,180 40,160 50,140 C70,160 120,140 120,100 C120,60 80,40 60,50 C80,30 120,20 140,40 C152,52 160,76 160,100 Z"/>
+	</svg>
+	<svg class="swirl s3" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+		<path fill="#3b82f6" d="M100,30 C130,30 155,55 155,85 C155,115 130,135 110,130 C135,120 135,80 100,72 C70,66 55,85 55,100 C55,115 70,130 88,130 C72,138 45,128 45,100 C45,60 70,30 100,30 Z"/>
+	</svg>
+	<div class="min-h-[90vh] flex items-center justify-center px-4">
+		<div class="w-full max-w-md glass-card rounded-2xl p-8 text-white">
+			<div class="text-center mb-6">
+				<div class="mx-auto mb-3 w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center">🔹</div>
+				<h2 class="text-2xl font-bold">Create account</h2>
 			</div>
-			<div class="field">
-				<input class="input" type="email" name="email" placeholder="Email (optional)">
+			<form method="post" class="space-y-4">
+				<div>
+					<label class="block text-sm text-white/80">Username</label>
+					<input class="mt-1 block w-full rounded-lg border-0 bg-white text-gray-900 placeholder-gray-400 shadow-sm focus:ring-2 focus:ring-indigo-500" type="text" name="username" placeholder="username" required>
+				</div>
+				<div>
+					<label class="block text-sm text-white/80">Email (optional)</label>
+					<input class="mt-1 block w-full rounded-lg border-0 bg-white text-gray-900 placeholder-gray-400 shadow-sm focus:ring-2 focus:ring-indigo-500" type="email" name="email" placeholder="you@example.com">
+				</div>
+				<div>
+					<label class="block text-sm text-white/80">Password</label>
+					<input class="mt-1 block w-full rounded-lg border-0 bg-white text-gray-900 placeholder-gray-400 shadow-sm focus:ring-2 focus:ring-indigo-500" type="password" name="password" placeholder="At least 8 characters" minlength="8" required>
+				</div>
+				<button class="w-full inline-flex justify-center rounded-lg bg-indigo-600 px-4 py-2.5 font-medium shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-white/30 transition" type="submit">Create account</button>
+			</form>
+			<div class="mt-6 text-center text-sm text-white/80">or continue with</div>
+			<div class="mt-3 flex items-center justify-center gap-3">
+				<button type="button" class="btn-social"><img alt="g" src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5 h-5"></button>
+				<button type="button" class="btn-social"><img alt="gh" src="https://www.svgrepo.com/show/475654/github-color.svg" class="w-5 h-5"></button>
+				<button type="button" class="btn-social"><img alt="fb" src="https://www.svgrepo.com/show/452196/facebook-1.svg" class="w-5 h-5"></button>
 			</div>
-			<div class="field">
-				<input class="input" type="password" name="password" placeholder="Password (8+ characters)" minlength="8" required>
+			<div class="mt-6 text-center text-sm text-white/80">
+				Already have an account? <a class="underline decoration-white/40 hover:decoration-white" href="{{ url_for('auth.login') }}">Log in</a>
 			</div>
-			<button class="btn" type="submit">Create account</button>
-		</form>
-		<div class="auth-switch">
-			<span class="muted">Already have an account?</span>
-			<a class="link-cta" href="{{ url_for('auth.login') }}">Log in</a>
 		</div>
 	</div>
-</section>
+</div>
 {% endblock %}
