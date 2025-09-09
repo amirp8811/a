@@ -117,8 +117,10 @@ ROBLOX_USERINFO_URL = "https://apis.roblox.com/oauth/v1/userinfo"
 @profile_bp.route("/roblox/login")
 @login_required
 def roblox_oauth_login():
+	print(f"DEBUG: ROBLOX_CLIENT_ID = {ROBLOX_CLIENT_ID}")
+	print(f"DEBUG: ROBLOX_REDIRECT_URI = {ROBLOX_REDIRECT_URI}")
 	if not ROBLOX_CLIENT_ID or not ROBLOX_REDIRECT_URI:
-		flash("Roblox OAuth is not configured", "error")
+		flash(f"Roblox OAuth is not configured. CLIENT_ID: {bool(ROBLOX_CLIENT_ID)}, REDIRECT_URI: {bool(ROBLOX_REDIRECT_URI)}", "error")
 		return redirect(url_for("profile.verify_roblox"))
 	params = {
 		"client_id": ROBLOX_CLIENT_ID,
@@ -126,7 +128,9 @@ def roblox_oauth_login():
 		"response_type": "code",
 		"scope": "openid profile",
 	}
-	return redirect(f"{ROBLOX_AUTH_URL}?{urlencode(params)}")
+	auth_url = f"{ROBLOX_AUTH_URL}?{urlencode(params)}"
+	print(f"DEBUG: Redirecting to {auth_url}")
+	return redirect(auth_url)
 
 
 @profile_bp.route("/roblox/callback")
