@@ -1,55 +1,142 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="dash-hero">
-	<div>
-		<h2 class="title">Welcome to AnomiDate</h2>
-		<p class="subtitle">Finish setup then start swiping. Your duo awaits.</p>
+<!-- Welcome Header -->
+<div class="glass-card rounded-2xl p-8 mb-8">
+	<div class="flex items-center justify-between">
+		<div>
+			<h1 class="text-3xl font-bold text-white mb-2">
+				Welcome back, {{ current_user.username }}! 👋
+			</h1>
+			<p class="text-gray-400">Ready to find your next gaming partner?</p>
+		</div>
+		<div class="hidden md:flex items-center space-x-4">
+			<div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+				<i data-lucide="heart" class="w-6 h-6 text-white"></i>
+			</div>
+		</div>
 	</div>
-	<div class="icon-badge">💜</div>
 </div>
 
-<div class="stat-grid">
-	<div class="stat"><div class="label">Profile</div><div class="value">Setup</div></div>
-	<div class="stat"><div class="label">Verification</div><div class="value">Required</div></div>
-	<div class="stat"><div class="label">Matches</div><div class="value">0</div></div>
-	<div class="stat"><div class="label">Messages</div><div class="value">0</div></div>
+<!-- Stats Grid -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+	<div class="glass-card rounded-xl p-6 text-center">
+		<div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mx-auto mb-4">
+			<i data-lucide="users" class="w-6 h-6 text-white"></i>
+		</div>
+		<div class="text-2xl font-bold text-white mb-1">0</div>
+		<div class="text-sm text-gray-400">Matches</div>
+	</div>
+	
+	<div class="glass-card rounded-xl p-6 text-center">
+		<div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center mx-auto mb-4">
+			<i data-lucide="message-circle" class="w-6 h-6 text-white"></i>
+		</div>
+		<div class="text-2xl font-bold text-white mb-1">0</div>
+		<div class="text-sm text-gray-400">Messages</div>
+	</div>
+	
+	<div class="glass-card rounded-xl p-6 text-center">
+		<div class="w-12 h-12 bg-gradient-to-r from-green-500 to-blue-500 rounded-xl flex items-center justify-center mx-auto mb-4">
+			<i data-lucide="heart" class="w-6 h-6 text-white"></i>
+		</div>
+		<div class="text-2xl font-bold text-white mb-1">0</div>
+		<div class="text-sm text-gray-400">Swipes Today</div>
+	</div>
+	
+	<div class="glass-card rounded-xl p-6 text-center">
+		<div class="w-12 h-12 bg-gradient-to-r from-pink-500 to-red-500 rounded-xl flex items-center justify-center mx-auto mb-4">
+			<i data-lucide="flame" class="w-6 h-6 text-white"></i>
+		</div>
+		<div class="text-2xl font-bold text-white mb-1">0</div>
+		<div class="text-sm text-gray-400">Day Streak</div>
+	</div>
 </div>
 
-<div class="action-grid" style="margin-bottom:1rem;">
-	<div class="action-tile">
-		<div>
-			<div class="label">Start swiping</div>
-			<div class="sub">Discover compatible players</div>
+<!-- Quick Actions -->
+<div class="grid md:grid-cols-2 gap-6 mb-8">
+	<!-- Start Swiping Card -->
+	<div class="glass-card rounded-2xl p-8 hover:transform hover:scale-105 transition-all duration-300">
+		<div class="flex items-center justify-between mb-6">
+			<div>
+				<h3 class="text-xl font-bold text-white mb-2">Start Swiping</h3>
+				<p class="text-gray-400">Discover compatible players and find your perfect gaming duo</p>
+			</div>
+			<div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center">
+				<i data-lucide="heart" class="w-8 h-8 text-white"></i>
+			</div>
 		</div>
-		<div class="cta"><a class="btn" href="{{ url_for('swipe.swipe_home') }}">Open</a></div>
+		<a href="{{ url_for('swipe.swipe_home') }}" class="btn-primary w-full py-3 px-6 rounded-xl font-semibold text-center transition-all duration-200 hover:scale-105">
+			<i data-lucide="arrow-right" class="w-5 h-5 inline mr-2"></i>
+			Open Swipe
+		</a>
 	</div>
-	<div class="action-tile">
-		<div>
-			<div class="label">Matches</div>
-			<div class="sub">See who liked you back</div>
+	
+	<!-- View Matches Card -->
+	<div class="glass-card rounded-2xl p-8 hover:transform hover:scale-105 transition-all duration-300">
+		<div class="flex items-center justify-between mb-6">
+			<div>
+				<h3 class="text-xl font-bold text-white mb-2">Your Matches</h3>
+				<p class="text-gray-400">See who liked you back and start conversations</p>
+			</div>
+			<div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center">
+				<i data-lucide="users" class="w-8 h-8 text-white"></i>
+			</div>
 		</div>
-		<div class="cta"><a class="btn ghost" href="{{ url_for('matches.matches_list') }}">Open</a></div>
+		<a href="{{ url_for('matches.matches_list') }}" class="btn-secondary w-full py-3 px-6 rounded-xl font-semibold text-center transition-all duration-200 hover:scale-105">
+			<i data-lucide="arrow-right" class="w-5 h-5 inline mr-2"></i>
+			View Matches
+		</a>
 	</div>
-	<div class="action-tile">
-		<div>
-			<div class="label">Profile</div>
-			<div class="sub">View and edit your info</div>
+</div>
+
+<!-- Profile & Settings -->
+<div class="grid md:grid-cols-3 gap-6">
+	<!-- Profile Card -->
+	<div class="glass-card rounded-2xl p-6">
+		<div class="flex items-center space-x-4 mb-4">
+			<div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+				<i data-lucide="user" class="w-6 h-6 text-white"></i>
+			</div>
+			<div>
+				<h3 class="font-semibold text-white">Profile</h3>
+				<p class="text-sm text-gray-400">Manage your profile</p>
+			</div>
 		</div>
-		<div class="cta"><a class="btn ghost" href="{{ url_for('profile.view_profile') }}">Open</a></div>
+		<a href="{{ url_for('profile.view_profile') }}" class="text-purple-400 hover:text-purple-300 text-sm font-medium transition-colors">
+			View Profile <i data-lucide="arrow-right" class="w-4 h-4 inline ml-1"></i>
+		</a>
 	</div>
-	<div class="action-tile">
-		<div>
-			<div class="label">Edit profile</div>
-			<div class="sub">Update details and servers</div>
+	
+	<!-- Edit Profile Card -->
+	<div class="glass-card rounded-2xl p-6">
+		<div class="flex items-center space-x-4 mb-4">
+			<div class="w-12 h-12 bg-gradient-to-r from-green-500 to-blue-500 rounded-xl flex items-center justify-center">
+				<i data-lucide="edit" class="w-6 h-6 text-white"></i>
+			</div>
+			<div>
+				<h3 class="font-semibold text-white">Edit Profile</h3>
+				<p class="text-sm text-gray-400">Update your details</p>
+			</div>
 		</div>
-		<div class="cta"><a class="btn ghost" href="{{ url_for('profile.edit_profile') }}">Open</a></div>
+		<a href="{{ url_for('profile.edit_profile') }}" class="text-purple-400 hover:text-purple-300 text-sm font-medium transition-colors">
+			Edit Profile <i data-lucide="arrow-right" class="w-4 h-4 inline ml-1"></i>
+		</a>
 	</div>
-	<div class="action-tile">
-		<div>
-			<div class="label">Verify account</div>
-			<div class="sub">Link Roblox to unlock swiping</div>
+	
+	<!-- Verify Account Card -->
+	<div class="glass-card rounded-2xl p-6">
+		<div class="flex items-center space-x-4 mb-4">
+			<div class="w-12 h-12 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-xl flex items-center justify-center">
+				<i data-lucide="shield-check" class="w-6 h-6 text-white"></i>
+			</div>
+			<div>
+				<h3 class="font-semibold text-white">Verify Account</h3>
+				<p class="text-sm text-gray-400">Connect Roblox</p>
+			</div>
 		</div>
-		<div class="cta"><a class="btn ghost" href="{{ url_for('profile.verify_roblox') }}">Open</a></div>
+		<a href="{{ url_for('profile.verify_roblox') }}" class="text-purple-400 hover:text-purple-300 text-sm font-medium transition-colors">
+			Verify Now <i data-lucide="arrow-right" class="w-4 h-4 inline ml-1"></i>
+		</a>
 	</div>
 </div>
 {% endblock %}

@@ -1,23 +1,214 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>Swipe</h2>
-<div class="card animate-in">
-	<div class="profile-header">
-		{% if avatar_url %}
-			<img class="avatar" src="{{ avatar_url }}" alt="avatar"/>
-		{% endif %}
-		<h3>{{ profile.username }}</h3>
+<div class="max-w-md mx-auto">
+	<!-- Swipe Progress Bar -->
+	<div class="mb-6">
+		<div class="flex items-center justify-between text-sm text-gray-400 mb-2">
+			<span>Swipes Today</span>
+			<span>0 / 50</span>
+		</div>
+		<div class="swipe-progress">
+			<div class="swipe-progress-fill" style="width: 0%"></div>
+		</div>
 	</div>
-	<ul class="kv">
-		<li><span>Age</span><strong>{{ profile.age or '—' }}</strong></li>
-		<li><span>Gender</span><strong>{{ profile.gender or '—' }}</strong></li>
-		<li><span>Playstyle</span><strong>{{ profile.playstyle or '—' }}</strong></li>
-		<li><span>Servers</span><strong>{{ ', '.join(server_prefs) if server_prefs else '—' }}</strong></li>
-	</ul>
-	<p>{{ profile.bio or '' }}</p>
-	<p>
-		<a class="btn" href="{{ url_for('swipe.like_user', target_id=profile.id) }}">❤️ Like</a>
-		<a class="btn ghost" href="{{ url_for('swipe.pass_user', target_id=profile.id) }}">❌ Pass</a>
-	</p>
+
+	<!-- Swipe Card Container -->
+	<div class="relative h-96 mb-8">
+		<div id="swipeCard" class="swipe-card glass-card rounded-2xl p-8 h-full flex flex-col justify-between cursor-grab">
+			<!-- User Info -->
+			<div class="text-center">
+				<div class="w-24 h-24 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
+					<i data-lucide="user" class="w-12 h-12 text-white"></i>
+				</div>
+				<h3 class="text-2xl font-bold text-white mb-2">GamerName123</h3>
+				<div class="flex items-center justify-center space-x-4 text-sm text-gray-400 mb-4">
+					<span>Age: 18</span>
+					<span>•</span>
+					<span>Male</span>
+				</div>
+				<p class="text-gray-300 text-center mb-4">
+					"Looking for a duo to dominate Anomic! I'm a skilled player who loves strategy and teamwork. Let's climb the leaderboards together! 🎮"
+				</p>
+			</div>
+
+			<!-- Gaming Info -->
+			<div class="space-y-3">
+				<div class="flex items-center space-x-2">
+					<i data-lucide="gamepad-2" class="w-4 h-4 text-purple-400"></i>
+					<span class="text-sm text-gray-300">Playstyle: Competitive</span>
+				</div>
+				<div class="flex items-center space-x-2">
+					<i data-lucide="server" class="w-4 h-4 text-blue-400"></i>
+					<span class="text-sm text-gray-300">Servers: US East, US West</span>
+				</div>
+				<div class="flex items-center space-x-2">
+					<i data-lucide="clock" class="w-4 h-4 text-green-400"></i>
+					<span class="text-sm text-gray-300">Online: Now</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Action Buttons -->
+	<div class="flex justify-center space-x-8">
+		<button id="passBtn" class="w-16 h-16 btn-pass rounded-full flex items-center justify-center hover:scale-110 transition-all duration-200">
+			<i data-lucide="x" class="w-8 h-8"></i>
+		</button>
+		<button id="likeBtn" class="w-16 h-16 btn-like rounded-full flex items-center justify-center hover:scale-110 transition-all duration-200">
+			<i data-lucide="heart" class="w-8 h-8 text-white"></i>
+		</button>
+	</div>
+
+	<!-- Instructions -->
+	<div class="mt-8 text-center text-sm text-gray-400">
+		<p>Drag the card left to pass or right to like</p>
+		<p class="mt-1">Or use the buttons below</p>
+	</div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+	const card = document.getElementById('swipeCard');
+	const likeBtn = document.getElementById('likeBtn');
+	const passBtn = document.getElementById('passBtn');
+	
+	let isDragging = false;
+	let startX = 0;
+	let currentX = 0;
+	let startY = 0;
+	let currentY = 0;
+	let initialTransform = '';
+	
+	// Touch events
+	card.addEventListener('touchstart', handleStart, { passive: false });
+	card.addEventListener('touchmove', handleMove, { passive: false });
+	card.addEventListener('touchend', handleEnd, { passive: false });
+	
+	// Mouse events
+	card.addEventListener('mousedown', handleStart);
+	card.addEventListener('mousemove', handleMove);
+	card.addEventListener('mouseup', handleEnd);
+	card.addEventListener('mouseleave', handleEnd);
+	
+	// Button events
+	likeBtn.addEventListener('click', () => swipeCard('like'));
+	passBtn.addEventListener('click', () => swipeCard('pass'));
+	
+	function handleStart(e) {
+		isDragging = true;
+		card.classList.add('swiping');
+		
+		const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+		const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+		
+		startX = clientX;
+		startY = clientY;
+		currentX = clientX;
+		currentY = clientY;
+		
+		initialTransform = card.style.transform;
+	}
+	
+	function handleMove(e) {
+		if (!isDragging) return;
+		
+		e.preventDefault();
+		
+		const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+		const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+		
+		currentX = clientX;
+		currentY = clientY;
+		
+		const deltaX = currentX - startX;
+		const deltaY = currentY - startY;
+		const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+		
+		if (distance > 10) {
+			const angle = deltaX * 0.1;
+			const opacity = Math.max(0.3, 1 - distance / 300);
+			
+			card.style.transform = `translate(${deltaX}px, ${deltaY}px) rotate(${angle}deg)`;
+			card.style.opacity = opacity;
+			
+			// Change cursor based on direction
+			if (deltaX > 50) {
+				card.style.cursor = 'grabbing';
+			} else if (deltaX < -50) {
+				card.style.cursor = 'grabbing';
+			}
+		}
+	}
+	
+	function handleEnd(e) {
+		if (!isDragging) return;
+		
+		isDragging = false;
+		card.classList.remove('swiping');
+		
+		const deltaX = currentX - startX;
+		const deltaY = currentY - startY;
+		const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+		
+		// Reset if not swiped far enough
+		if (distance < 100) {
+			card.style.transform = initialTransform;
+			card.style.opacity = '1';
+			card.style.cursor = 'grab';
+			return;
+		}
+		
+		// Determine swipe direction
+		if (deltaX > 100) {
+			swipeCard('like');
+		} else if (deltaX < -100) {
+			swipeCard('pass');
+		} else {
+			// Reset if not clear direction
+			card.style.transform = initialTransform;
+			card.style.opacity = '1';
+			card.style.cursor = 'grab';
+		}
+	}
+	
+	function swipeCard(action) {
+		card.classList.add(action);
+		
+		// Update progress bar
+		const progressBar = document.querySelector('.swipe-progress-fill');
+		const currentWidth = parseInt(progressBar.style.width) || 0;
+		const newWidth = Math.min(currentWidth + 2, 100);
+		progressBar.style.width = newWidth + '%';
+		
+		// Show feedback
+		if (action === 'like') {
+			showToast('💜 Liked!', 'success');
+		} else {
+			showToast('✖️ Passed', 'info');
+		}
+		
+		// Reset card after animation
+		setTimeout(() => {
+			card.classList.remove('like', 'pass');
+			card.style.transform = '';
+			card.style.opacity = '1';
+			card.style.cursor = 'grab';
+			
+			// In a real app, you'd load the next card here
+			// For demo, we'll just reset
+		}, 500);
+	}
+	
+	function showToast(message, type) {
+		const toast = document.createElement('div');
+		toast.className = `toast px-4 py-3 rounded-lg text-sm slide-up fixed top-20 left-1/2 transform -translate-x-1/2 z-50`;
+		toast.textContent = message;
+		document.body.appendChild(toast);
+		
+		setTimeout(() => {
+			toast.remove();
+		}, 3000);
+	}
+});
+</script>
 {% endblock %}

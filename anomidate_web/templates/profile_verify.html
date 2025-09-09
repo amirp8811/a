@@ -1,15 +1,76 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="card">
-	<h2>Verify Roblox Account</h2>
-	<p class="muted">Connect your Roblox account to verify your identity and unlock all features.</p>
-	<div style="text-align: center; margin: 2rem 0;">
-		<a class="btn lg" href="{{ url_for('profile.roblox_oauth_login') }}" style="font-size: 1.1rem; padding: 1rem 2rem;">
-			🔗 Sign in with Roblox
-		</a>
+<div class="max-w-2xl mx-auto">
+	<!-- Header -->
+	<div class="text-center mb-8">
+		<div class="w-20 h-20 bg-gradient-to-r from-purple-500 to-pink-500 rounded-3xl flex items-center justify-center mx-auto mb-6">
+			<i data-lucide="shield-check" class="w-10 h-10 text-white"></i>
+		</div>
+		<h1 class="text-3xl font-bold text-white mb-4">Verify Your Roblox Account</h1>
+		<p class="text-gray-400 text-lg">Connect your Roblox account to unlock all features and start swiping</p>
 	</div>
-	<p class="muted" style="font-size: 0.9rem; text-align: center;">
-		This will redirect you to Roblox to securely verify your account.
-	</p>
+
+	<!-- Verification Card -->
+	<div class="glass-card rounded-2xl p-8 text-center">
+		<div class="mb-8">
+			<div class="w-24 h-24 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
+				<i data-lucide="gamepad-2" class="w-12 h-12 text-white"></i>
+			</div>
+			<h2 class="text-2xl font-bold text-white mb-4">Sign in with Roblox</h2>
+			<p class="text-gray-400 mb-6">
+				This will redirect you to Roblox to securely verify your account and unlock all features.
+			</p>
+		</div>
+
+		<!-- Roblox OAuth Button -->
+		<a href="{{ url_for('profile.roblox_oauth_login') }}" class="btn-primary px-12 py-4 rounded-xl text-xl font-semibold inline-flex items-center transition-all duration-200 hover:scale-105 mb-6">
+			<i data-lucide="external-link" class="w-6 h-6 mr-3"></i>
+			Connect Roblox Account
+		</a>
+
+		<!-- Benefits List -->
+		<div class="text-left space-y-4">
+			<h3 class="text-lg font-semibold text-white mb-4">What you get after verification:</h3>
+			<div class="space-y-3">
+				<div class="flex items-center space-x-3">
+					<i data-lucide="check-circle" class="w-5 h-5 text-green-400"></i>
+					<span class="text-gray-300">Access to the swipe feature</span>
+				</div>
+				<div class="flex items-center space-x-3">
+					<i data-lucide="check-circle" class="w-5 h-5 text-green-400"></i>
+					<span class="text-gray-300">Verified badge on your profile</span>
+				</div>
+				<div class="flex items-center space-x-3">
+					<i data-lucide="check-circle" class="w-5 h-5 text-green-400"></i>
+					<span class="text-gray-300">Match with other verified players</span>
+				</div>
+				<div class="flex items-center space-x-3">
+					<i data-lucide="check-circle" class="w-5 h-5 text-green-400"></i>
+					<span class="text-gray-300">Secure and private verification</span>
+				</div>
+			</div>
+		</div>
+
+		<!-- Security Note -->
+		<div class="mt-8 p-4 bg-blue-500/10 border border-blue-500/20 rounded-xl">
+			<div class="flex items-start space-x-3">
+				<i data-lucide="shield" class="w-5 h-5 text-blue-400 mt-0.5"></i>
+				<div>
+					<h4 class="text-sm font-semibold text-blue-400 mb-1">Security & Privacy</h4>
+					<p class="text-sm text-gray-400">
+						We only access your basic Roblox profile information. Your password and personal data are never shared with us.
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Help Section -->
+	<div class="mt-8 text-center">
+		<p class="text-gray-400 text-sm">
+			Having trouble? 
+			<a href="#" class="text-purple-400 hover:text-purple-300 transition-colors">Contact Support</a>
+		</p>
+	</div>
 </div>
 {% endblock %}

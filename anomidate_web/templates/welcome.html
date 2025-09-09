@@ -1,53 +1,181 @@
 {% extends 'base.html' %}
 {% block content %}
-<section class="landing">
-	<div class="landing-hero">
-		<div class="landing-copy">
-			<h1 class="landing-title">Find your perfect Anomic duo</h1>
-			<p class="landing-sub">Roblox-verified profiles, clean swiping, and matches that actually lead to games.</p>
-			<div class="cta">
-				<a class="btn" href="{{ url_for('auth.register') }}">Get started</a>
-				<a class="btn outline" href="{{ url_for('auth.login') }}">I already have an account</a>
+<!-- Hero Section -->
+<section class="min-h-screen flex items-center justify-center relative">
+	<div class="text-center z-10 max-w-4xl mx-auto px-4">
+		<h1 class="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent fade-in">
+			Find Your Gaming Partner
+		</h1>
+		<h2 class="text-xl md:text-2xl text-gray-300 mb-8 fade-in" style="animation-delay: 0.2s">
+			Connect, match, and play with verified Roblox players in Anomic
+		</h2>
+		<div class="flex flex-col sm:flex-row gap-4 justify-center mb-12 fade-in" style="animation-delay: 0.4s">
+			<a href="{{ url_for('auth.register') }}" class="btn-primary px-8 py-4 rounded-xl text-lg font-semibold">
+				<i data-lucide="user-plus" class="w-5 h-5 inline mr-2"></i>
+				Get Started Free
+			</a>
+			<a href="{{ url_for('auth.login') }}" class="btn-secondary px-8 py-4 rounded-xl text-lg font-semibold">
+				<i data-lucide="log-in" class="w-5 h-5 inline mr-2"></i>
+				I Already Have an Account
+			</a>
+		</div>
+		
+		<!-- Trust Badges -->
+		<div class="flex flex-wrap justify-center gap-4 text-sm text-gray-400 fade-in" style="animation-delay: 0.6s">
+			<div class="flex items-center gap-2">
+				<i data-lucide="shield-check" class="w-4 h-4 text-green-400"></i>
+				<span>Roblox Verified</span>
 			</div>
-			<div class="trust">
-				<span class="badge">Roblox Verified</span>
-				<span class="badge">Private & Secure</span>
-				<span class="badge">Free to use</span>
+			<div class="flex items-center gap-2">
+				<i data-lucide="lock" class="w-4 h-4 text-blue-400"></i>
+				<span>Private & Secure</span>
+			</div>
+			<div class="flex items-center gap-2">
+				<i data-lucide="heart" class="w-4 h-4 text-pink-400"></i>
+				<span>Free to Use</span>
 			</div>
 		</div>
-		<div class="landing-art">
-			<div class="orb orb-a"></div>
-			<div class="orb orb-b"></div>
-			<div class="glass-card">
-				<h3>Why AnomiDate?</h3>
-				<ul>
-					<li>Real Roblox accounts (bio-verification)</li>
-					<li>Swipe smarter with simple filters</li>
-					<li>Match and chat instantly</li>
+	</div>
+</section>
+
+<!-- Features Section -->
+<section class="py-20">
+	<div class="max-w-6xl mx-auto">
+		<h2 class="text-3xl md:text-4xl font-bold text-center mb-12 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+			Why Choose AnomiDate?
+		</h2>
+		
+		<div class="grid md:grid-cols-3 gap-8">
+			<!-- Feature 1 -->
+			<div class="glass-card rounded-2xl p-8 text-center hover:transform hover:scale-105 transition-all duration-300">
+				<div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
+					<i data-lucide="shield-check" class="w-8 h-8 text-white"></i>
+				</div>
+				<h3 class="text-xl font-bold mb-4">Real Roblox Verification</h3>
+				<p class="text-gray-300">Connect your Roblox account securely. We verify every user to ensure authentic gaming connections.</p>
+			</div>
+			
+			<!-- Feature 2 -->
+			<div class="glass-card rounded-2xl p-8 text-center hover:transform hover:scale-105 transition-all duration-300">
+				<div class="w-16 h-16 bg-gradient-to-r from-pink-500 to-red-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
+					<i data-lucide="heart" class="w-8 h-8 text-white"></i>
+				</div>
+				<h3 class="text-xl font-bold mb-4">Smart Matching</h3>
+				<p class="text-gray-300">Swipe through profiles based on playstyle, server preferences, and gaming compatibility.</p>
+			</div>
+			
+			<!-- Feature 3 -->
+			<div class="glass-card rounded-2xl p-8 text-center hover:transform hover:scale-105 transition-all duration-300">
+				<div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
+					<i data-lucide="gamepad-2" class="w-8 h-8 text-white"></i>
+				</div>
+				<h3 class="text-xl font-bold mb-4">Gaming-Focused</h3>
+				<p class="text-gray-300">Built specifically for gamers. Find your perfect duo for Anomic and other Roblox games.</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- How It Works Section -->
+<section class="py-20">
+	<div class="max-w-4xl mx-auto text-center">
+		<h2 class="text-3xl md:text-4xl font-bold mb-12 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+			How It Works
+		</h2>
+		
+		<div class="grid md:grid-cols-3 gap-8">
+			<div class="text-center">
+				<div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+					1
+				</div>
+				<h3 class="text-lg font-semibold mb-2">Create Your Profile</h3>
+				<p class="text-gray-300">Set up your gaming profile with playstyle, server preferences, and bio.</p>
+			</div>
+			
+			<div class="text-center">
+				<div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+					2
+				</div>
+				<h3 class="text-lg font-semibold mb-2">Verify with Roblox</h3>
+				<p class="text-gray-300">Connect your Roblox account to verify your identity and unlock all features.</p>
+			</div>
+			
+			<div class="text-center">
+				<div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+					3
+				</div>
+				<h3 class="text-lg font-semibold mb-2">Start Swiping</h3>
+				<p class="text-gray-300">Discover compatible players, match, and start gaming together!</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-20">
+	<div class="max-w-4xl mx-auto text-center">
+		<div class="glass-card rounded-3xl p-12">
+			<h2 class="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+				Ready to Find Your Gaming Duo?
+			</h2>
+			<p class="text-xl text-gray-300 mb-8">
+				Join thousands of verified Roblox players looking for their perfect gaming partner.
+			</p>
+			<a href="{{ url_for('auth.register') }}" class="btn-primary px-12 py-4 rounded-xl text-xl font-semibold inline-flex items-center">
+				<i data-lucide="rocket" class="w-6 h-6 mr-3"></i>
+				Start Your Journey
+			</a>
+		</div>
+	</div>
+</section>
+
+<!-- Footer -->
+<footer class="py-12 border-t border-gray-800">
+	<div class="max-w-6xl mx-auto px-4">
+		<div class="grid md:grid-cols-4 gap-8">
+			<div>
+				<div class="flex items-center space-x-2 mb-4">
+					<div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+						<span class="text-white font-bold text-lg">A</span>
+					</div>
+					<span class="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">AnomiDate</span>
+				</div>
+				<p class="text-gray-400 text-sm">
+					The ultimate platform for Roblox gamers to find their perfect gaming partner.
+				</p>
+			</div>
+			
+			<div>
+				<h3 class="font-semibold mb-4">Product</h3>
+				<ul class="space-y-2 text-sm text-gray-400">
+					<li><a href="#" class="hover:text-white transition-colors">Features</a></li>
+					<li><a href="#" class="hover:text-white transition-colors">Pricing</a></li>
+					<li><a href="#" class="hover:text-white transition-colors">Safety</a></li>
+				</ul>
+			</div>
+			
+			<div>
+				<h3 class="font-semibold mb-4">Support</h3>
+				<ul class="space-y-2 text-sm text-gray-400">
+					<li><a href="#" class="hover:text-white transition-colors">Help Center</a></li>
+					<li><a href="#" class="hover:text-white transition-colors">Contact Us</a></li>
+					<li><a href="#" class="hover:text-white transition-colors">Community</a></li>
+				</ul>
+			</div>
+			
+			<div>
+				<h3 class="font-semibold mb-4">Legal</h3>
+				<ul class="space-y-2 text-sm text-gray-400">
+					<li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+					<li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
+					<li><a href="#" class="hover:text-white transition-colors">Cookie Policy</a></li>
 				</ul>
 			</div>
 		</div>
-	</div>
-
-	<div class="features grid cols-3">
-		<div class="feature-card">
-			<h4>Verified by Roblox</h4>
-			<p>We check bios for a unique phrase so you know who you're meeting is real.</p>
-		</div>
-		<div class="feature-card">
-			<h4>Swipe that makes sense</h4>
-			<p>Age, playstyle, and server preferences help you discover compatible partners.</p>
-		</div>
-		<div class="feature-card">
-			<h4>Built for gaming</h4>
-			<p>Mutual matches, messaging, and sessions — everything you need to squad up.</p>
+		
+		<div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
+			<p>&copy; 2024 AnomiDate. All rights reserved.</p>
 		</div>
 	</div>
-
-	<div class="callout card">
-		<h3 class="title">Ready to meet your duo?</h3>
-		<p>Create an account, verify in seconds, and start swiping.</p>
-		<a class="btn" href="{{ url_for('auth.register') }}">Create free account</a>
-	</div>
-</section>
+</footer>
 {% endblock %}

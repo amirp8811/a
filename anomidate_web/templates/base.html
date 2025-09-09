@@ -3,48 +3,280 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>AnomiDate</title>
+	<title>AnomiDate - Find Your Gaming Partner</title>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-	<!-- Tailwind CSS built locally for production -->
 	<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-  <style>
-    .auth-bg{position:relative;min-height:100vh;background:linear-gradient(135deg,#0b3a75 0%,#0a58ca 40%,#1d4ed8 100%);overflow:hidden}
-    /* Make auth background bleed full-viewport even inside centered .page */
-    .page .auth-bg{width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);margin-top:-2rem;margin-bottom:-2rem}
-    .blob{position:absolute;filter:blur(30px);opacity:.35;pointer-events:none;z-index:0}
-    .blob.b1{top:6%;left:25%;width:260px;height:260px;background:radial-gradient(ellipse at center,#60a5fa,transparent 60%);border-radius:50%}
-    .blob.b2{top:25%;right:20%;width:320px;height:320px;background:radial-gradient(ellipse at center,#93c5fd,transparent 60%);border-radius:50%}
-    .blob.b3{bottom:10%;left:10%;width:380px;height:220px;background:radial-gradient(ellipse at center,#60a5fa,transparent 60%);border-radius:50%}
-    .glass-card{background:rgba(255,255,255,.12);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 10px 30px rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.2);z-index:2}
-    .btn-social{display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.3);border-radius:.75rem;padding:.6rem;width:3rem;height:3rem;background:rgba(255,255,255,.06);transition:transform .12s ease, background .12s ease}
-    .btn-social:hover{transform:translateY(-1px);background:rgba(255,255,255,.12)}
-    /* Swirls */
-    .swirl{position:absolute;opacity:.5;mix-blend:screen;pointer-events:none;z-index:1}
-    .swirl path{filter:drop-shadow(0 8px 18px rgba(0,0,0,.25))}
-    @keyframes swirlFloat{0%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-8px) rotate(2deg)}100%{transform:translateY(0) rotate(0)}}
-    .swirl.s1{top:14%;left:55%;width:180px;animation:swirlFloat 13s ease-in-out infinite}
-    .swirl.s2{top:52%;right:14%;width:220px;animation:swirlFloat 15s ease-in-out infinite}
-    .swirl.s3{bottom:12%;left:22%;width:160px;animation:swirlFloat 12s ease-in-out infinite}
-  </style>
+	<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+	<style>
+		/* Gaming Background */
+		.gaming-bg {
+			background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+			min-height: 100vh;
+			position: relative;
+			overflow: hidden;
+		}
+		
+		.gaming-bg::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: 
+				radial-gradient(circle at 20% 20%, rgba(139, 92, 246, 0.3) 0%, transparent 50%),
+				radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.3) 0%, transparent 50%),
+				radial-gradient(circle at 40% 60%, rgba(0, 191, 255, 0.2) 0%, transparent 50%);
+			animation: backgroundShift 20s ease-in-out infinite;
+		}
+		
+		@keyframes backgroundShift {
+			0%, 100% { transform: translateX(0) translateY(0) scale(1); }
+			33% { transform: translateX(-20px) translateY(-10px) scale(1.05); }
+			66% { transform: translateX(20px) translateY(10px) scale(0.95); }
+		}
+		
+		/* Glassmorphism */
+		.glass-card {
+			background: rgba(255, 255, 255, 0.08);
+			backdrop-filter: blur(20px);
+			-webkit-backdrop-filter: blur(20px);
+			border: 1px solid rgba(255, 255, 255, 0.15);
+			box-shadow: 
+				0 8px 32px rgba(0, 0, 0, 0.3),
+				inset 0 1px 0 rgba(255, 255, 255, 0.1);
+		}
+		
+		/* Navigation */
+		.nav-glass {
+			background: rgba(15, 15, 35, 0.8);
+			backdrop-filter: blur(20px);
+			-webkit-backdrop-filter: blur(20px);
+			border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+		}
+		
+		/* Swipe Cards */
+		.swipe-card {
+			transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+			transform-origin: center;
+			cursor: grab;
+			user-select: none;
+		}
+		
+		.swipe-card:active {
+			cursor: grabbing;
+		}
+		
+		.swipe-card.swiping {
+			transition: none;
+		}
+		
+		.swipe-card.like {
+			transform: rotate(15deg) translateX(100vw);
+			opacity: 0;
+		}
+		
+		.swipe-card.pass {
+			transform: rotate(-15deg) translateX(-100vw);
+			opacity: 0;
+		}
+		
+		/* Buttons */
+		.btn-primary {
+			background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+			box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+			transition: all 0.3s ease;
+		}
+		
+		.btn-primary:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 8px 25px rgba(139, 92, 246, 0.6);
+		}
+		
+		.btn-secondary {
+			background: rgba(255, 255, 255, 0.1);
+			border: 1px solid rgba(255, 255, 255, 0.2);
+			backdrop-filter: blur(10px);
+		}
+		
+		.btn-secondary:hover {
+			background: rgba(255, 255, 255, 0.2);
+			transform: translateY(-1px);
+		}
+		
+		.btn-like {
+			background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+			box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+		}
+		
+		.btn-pass {
+			background: rgba(255, 255, 255, 0.1);
+			border: 2px solid #ec4899;
+			color: #ec4899;
+		}
+		
+		/* Animations */
+		.fade-in {
+			animation: fadeIn 0.6s ease-out;
+		}
+		
+		@keyframes fadeIn {
+			from { opacity: 0; transform: translateY(20px); }
+			to { opacity: 1; transform: translateY(0); }
+		}
+		
+		.slide-up {
+			animation: slideUp 0.4s ease-out;
+		}
+		
+		@keyframes slideUp {
+			from { opacity: 0; transform: translateY(30px); }
+			to { opacity: 1; transform: translateY(0); }
+		}
+		
+		/* Toast Notifications */
+		.toast {
+			background: rgba(15, 15, 35, 0.9);
+			backdrop-filter: blur(20px);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+		}
+		
+		/* Mobile Navigation */
+		.mobile-nav {
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			background: rgba(15, 15, 35, 0.9);
+			backdrop-filter: blur(20px);
+			border-top: 1px solid rgba(255, 255, 255, 0.1);
+			z-index: 50;
+		}
+		
+		/* Responsive */
+		@media (max-width: 768px) {
+			.desktop-nav { display: none; }
+			.mobile-nav { display: flex; }
+		}
+		
+		@media (min-width: 769px) {
+			.desktop-nav { display: flex; }
+			.mobile-nav { display: none; }
+		}
+		
+		/* Swipe Progress Bar */
+		.swipe-progress {
+			height: 4px;
+			background: rgba(255, 255, 255, 0.1);
+			border-radius: 2px;
+			overflow: hidden;
+		}
+		
+		.swipe-progress-fill {
+			height: 100%;
+			background: linear-gradient(90deg, #8b5cf6, #ec4899);
+			transition: width 0.3s ease;
+		}
+	</style>
 </head>
-<body class="theme page-bg" style="min-height:100vh;">
+<body class="gaming-bg text-white font-sans">
+	<!-- Navigation -->
+	<nav class="nav-glass fixed top-0 left-0 right-0 z-40 desktop-nav">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+			<div class="flex items-center justify-between h-16">
+				<div class="flex items-center space-x-8">
+					<a href="{{ url_for('index') }}" class="flex items-center space-x-2">
+						<div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+							<span class="text-white font-bold text-lg">A</span>
+						</div>
+						<span class="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">AnomiDate</span>
+					</a>
+					<div class="hidden md:flex space-x-6">
+						<a href="{{ url_for('index') }}" class="nav-link">Dashboard</a>
+						<a href="{{ url_for('profile.view_profile') }}" class="nav-link">Profile</a>
+						<a href="{{ url_for('swipe.swipe_home') }}" class="nav-link">Swipe</a>
+						<a href="{{ url_for('matches.matches_list') }}" class="nav-link">Matches</a>
+						{% if current_user.is_authenticated and session.get('is_admin') %}
+						<a href="{{ url_for('admin.dashboard') }}" class="nav-link">Admin</a>
+						{% endif %}
+					</div>
+				</div>
+				<div class="flex items-center space-x-4">
+					{% if current_user.is_authenticated %}
+						<span class="text-sm text-gray-300">Welcome, {{ current_user.username }}</span>
+						<a href="{{ url_for('auth.logout') }}" class="btn-secondary px-4 py-2 rounded-lg text-sm">Logout</a>
+					{% else %}
+						<a href="{{ url_for('auth.login') }}" class="btn-secondary px-4 py-2 rounded-lg text-sm">Login</a>
+						<a href="{{ url_for('auth.register') }}" class="btn-primary px-4 py-2 rounded-lg text-sm">Sign Up</a>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</nav>
+
+	<!-- Mobile Navigation -->
+	<nav class="mobile-nav">
+		<div class="flex justify-around py-2">
+			<a href="{{ url_for('index') }}" class="flex flex-col items-center p-2 text-gray-400 hover:text-white transition-colors">
+				<i data-lucide="home" class="w-5 h-5"></i>
+				<span class="text-xs mt-1">Home</span>
+			</a>
+			<a href="{{ url_for('swipe.swipe_home') }}" class="flex flex-col items-center p-2 text-gray-400 hover:text-white transition-colors">
+				<i data-lucide="heart" class="w-5 h-5"></i>
+				<span class="text-xs mt-1">Swipe</span>
+			</a>
+			<a href="{{ url_for('matches.matches_list') }}" class="flex flex-col items-center p-2 text-gray-400 hover:text-white transition-colors">
+				<i data-lucide="users" class="w-5 h-5"></i>
+				<span class="text-xs mt-1">Matches</span>
+			</a>
+			<a href="{{ url_for('profile.view_profile') }}" class="flex flex-col items-center p-2 text-gray-400 hover:text-white transition-colors">
+				<i data-lucide="user" class="w-5 h-5"></i>
+				<span class="text-xs mt-1">Profile</span>
+			</a>
+		</div>
+	</nav>
+
+	<!-- Toast Notifications -->
 	{% with messages = get_flashed_messages(with_categories=true) %}
 		{% if messages %}
-			<div class="toast-wrap">
+			<div class="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 space-y-2">
 				{% for category, message in messages %}
-					<div class="toast {{ category }}">{{ message }}</div>
+					<div class="toast px-4 py-3 rounded-lg text-sm slide-up">
+						{{ message }}
+					</div>
 				{% endfor %}
 			</div>
 		{% endif %}
 	{% endwith %}
-	<main class="page" style="display:flex; flex-direction:column; gap:1.25rem;">
-		<div class="{% if not no_glass %}glass-card site-glass{% endif %}" style="{% if not no_glass %}padding:2rem; border-radius:22px;{% endif %}">
+
+	<!-- Main Content -->
+	<main class="pt-16 pb-20 md:pb-8">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 			{% block content %}{% endblock %}
 		</div>
 	</main>
-	<!-- legacy background removed: using new gradient + swirls theme -->
+
+	<script>
+		// Initialize Lucide icons
+		lucide.createIcons();
+		
+		// Add active state to navigation links
+		document.addEventListener('DOMContentLoaded', function() {
+			const currentPath = window.location.pathname;
+			const navLinks = document.querySelectorAll('.nav-link');
+			
+			navLinks.forEach(link => {
+				if (link.getAttribute('href') === currentPath) {
+					link.classList.add('text-purple-400', 'font-semibold');
+				} else {
+					link.classList.add('text-gray-300', 'hover:text-white', 'transition-colors');
+				}
+			});
+		});
+	</script>
 	<script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
 </html>
