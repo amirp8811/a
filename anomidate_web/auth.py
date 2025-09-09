@@ -173,6 +173,79 @@ def reset_password():
 	return render_template("auth_reset.html")
 
 
+# Discord OAuth2 (login via Discord)
+DISCORD_CLIENT_ID = os.getenv("DISCORD_CLIENT_ID", "1262328937973687712")
+DISCORD_CLIENT_SECRET = os.getenv("DISCORD_CLIENT_SECRET", "__SET_ME__")
+DISCORD_REDIRECT_URI = os.getenv("DISCORD_REDIRECT_URI", "http://localhost:5000/auth/discord/callback")
+DISCORD_AUTH_URL = "https://discord.com/api/oauth2/authorize"
+DISCORD_TOKEN_URL = "https://discord.com/api/oauth2/token"
+DISCORD_USER_URL = "https://discord.com/api/users/@me"
+
+
+@auth_bp.route("/discord/login")
+def discord_login():
+	params = {
+		"client_id": DISCORD_CLIENT_ID,
+		"redirect_uri": DISCORD_REDIRECT_URI,
+		"response_type": "code",
+		"scope": "identify email",
+	}
+	from urllib.parse import urlencode
+	return redirect(f"{DISCORD_AUTH_URL}?{urlencode(params)}")
+
+
+@auth_bp.route("/discord/callback")
+def discord_callback():
+	code = request.args.get("code")
+	if not code:
+		flash("Discord login failed: missing code", "error")
+		return redirect(url_for("auth.login"))
+	import requests
+	data = {
+		"client_id": DISCORD_CLIENT_ID,
+		"client_secret": DISCORD_CLIENT_SECRET,
+		"grant_type": "authorization_code",
+		"code": code,
+		"redirect_uri": DISCORD_REDIRECT_URI,
+	}
+	headers = {"Content-Type": "application/x-www-form-urlencoded"}
+	tr = requests.post(DISCORD_TOKEN_URL, data=data, headers=headers, timeout=15)
+	if tr.status_code != 200:
+		flash("Discord token exchange failed", "error")
+		return redirect(url_for("auth.login"))
+	tok = tr.json()
+	access_token = tok.get("access_token")
+	if not access_token:
+		flash("Discord token missing", "error")
+		return redirect(url_for("auth.login"))
+	ur = requests.get(DISCORD_USER_URL, headers={"Authorization": f"Bearer {access_token}"}, timeout=15)
+	if ur.status_code != 200:
+		flash("Failed to fetch Discord user", "error")
+		return redirect(url_for("auth.login"))
+	ud = ur.json()
+	discord_id = str(ud.get("id"))
+	username = ud.get("username") or f"user_{discord_id}"
+	conn = connect()
+	cur = conn.cursor()
+	cur.execute("SELECT * FROM users WHERE discord_id = ?", (discord_id,))
+	row = cur.fetchone()
+	if not row:
+		cur.execute(
+			"INSERT INTO users (discord_id, username) VALUES (?, ?)",
+			(discord_id, username),
+		)
+		conn.commit()
+		cur.execute("SELECT * FROM users WHERE discord_id = ?", (discord_id,))
+		row = cur.fetchone()
+	conn.close()
+	if not row:
+		flash("Login failed", "error")
+		return redirect(url_for("auth.login"))
+	login_user(WebUser(row))
+	flash("Logged in with Discord", "success")
+	return redirect(url_for("index"))
+
+
 @auth_bp.route("/logout")
 @login_required
 def logout():

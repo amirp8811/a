@@ -21,4 +21,12 @@
 		<a class="btn" href="{{ url_for('admin.users') }}">Manage Users</a>
 	</p>
 </div>
+
+<div class="card">
+	<h3 class="title">Danger zone</h3>
+	<p class="muted">Deletes all accounts and related data. This cannot be undone.</p>
+	<form method="post" action="{{ url_for('admin.wipe_all_data') }}" onsubmit="return confirm('Delete ALL user accounts and data? This cannot be undone.');">
+		<button class="btn" style="background:#ef4444;">Wipe all user data</button>
+	</form>
+</div>
 {% endblock %}

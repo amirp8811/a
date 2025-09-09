@@ -61,6 +61,26 @@ def dashboard():
 	return render_template("admin_dashboard.html", total_users=total_users, total_matches=total_matches, total_msgs=total_msgs)
 
 
+@admin_bp.route("/wipe", methods=["POST"])
+def wipe_all_data():
+	if not _is_admin():
+		return redirect(url_for("admin.login"))
+	conn = connect()
+	cur = conn.cursor()
+	# Order matters due to FK-like relationships
+	cur.execute("DELETE FROM messages")
+	cur.execute("DELETE FROM mutual_matches")
+	cur.execute("DELETE FROM matches")
+	cur.execute("DELETE FROM daily_swipes")
+	cur.execute("DELETE FROM roblox_verification")
+	cur.execute("DELETE FROM password_resets")
+	cur.execute("DELETE FROM users")
+	conn.commit()
+	conn.close()
+	flash("All user accounts and related data were deleted", "success")
+	return redirect(url_for("admin.dashboard"))
+
+
 @admin_bp.route("/users")
 def users():
 	if not _is_admin():

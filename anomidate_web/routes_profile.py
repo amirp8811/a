@@ -101,12 +101,15 @@ def create_profile():
 def verify_roblox():
 	if request.method == "POST":
 		roblox_username = request.form.get("roblox_username", "").strip()
+		flash("Resolving Roblox username...", "success")
 		resolved = resolve_roblox_username(roblox_username)
 		if not resolved:
 			flash("Roblox username not found", "error")
 			return redirect(url_for("profile.verify_roblox"))
+		flash("Found user. Checking bio for verification phrase...", "success")
 		roblox_user_id = int(resolved.get("id"))
 		is_verified = check_roblox_verification(roblox_user_id)
+		flash("Updating your verification status...", "success")
 		conn = connect()
 		cur = conn.cursor()
 		cur.execute(
