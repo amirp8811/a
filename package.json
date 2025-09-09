@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Flask-based web app version of the Anomic Date bot.",
   "main": "index.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "build-css": "tailwindcss -i ./src/input.css -o ./anomidate_web/static/styles.css --minify",
     "watch-css": "tailwindcss -i ./src/input.css -o ./anomidate_web/static/styles.css --watch",
@@ -13,7 +16,7 @@
   "license": "ISC",
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.10",
-    "@tailwindcss/typography": "^0.5.16",
-    "tailwindcss": "^4.1.13"
+    "@tailwindcss/typography": "^0.5.10",
+    "tailwindcss": "^3.4.0"
   }
 }

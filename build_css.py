@@ -11,18 +11,27 @@ import sys
 def build_css():
     """Build production CSS using Tailwind CLI."""
     try:
-        # Try to run tailwindcss
+        # Try to run tailwindcss with npm
         result = subprocess.run([
-            'npx', 'tailwindcss', 
-            '-i', './src/input.css',
-            '-o', './anomidate_web/static/styles.css',
-            '--minify'
+            'npm', 'run', 'build-css'
         ], capture_output=True, text=True, check=True)
-        print("✅ CSS built successfully with Tailwind CLI")
+        print("✅ CSS built successfully with npm script")
         return True
     except (subprocess.CalledProcessError, FileNotFoundError) as e:
-        print(f"❌ Tailwind CLI failed: {e}")
-        return False
+        print(f"❌ npm build failed: {e}")
+        # Try direct npx as fallback
+        try:
+            result = subprocess.run([
+                'npx', 'tailwindcss', 
+                '-i', './src/input.css',
+                '-o', './anomidate_web/static/styles.css',
+                '--minify'
+            ], capture_output=True, text=True, check=True)
+            print("✅ CSS built successfully with npx fallback")
+            return True
+        except (subprocess.CalledProcessError, FileNotFoundError) as e2:
+            print(f"❌ npx fallback also failed: {e2}")
+            return False
 
 def create_fallback_css():
     """Create a fallback CSS file with essential styles."""
