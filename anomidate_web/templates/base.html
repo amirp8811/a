@@ -10,96 +10,144 @@
 	<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 	<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 	<style>
-		/* Reset and base styles */
+		/* Ultra-Modern Gaming Theme */
+		:root {
+			--primary-dark: #0D0D0D;
+			--secondary-dark: #121212;
+			--neon-purple: #8B5CF6;
+			--neon-pink: #EC4899;
+			--neon-cyan: #22D3EE;
+			--glass-opacity: 0.1;
+			--blur-amount: 20px;
+		}
+
 		* {
 			box-sizing: border-box;
 			margin: 0;
 			padding: 0;
 		}
-		
+
 		html {
 			scroll-behavior: smooth;
 			overflow-x: hidden;
 		}
-		
+
 		body {
 			font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 			line-height: 1.6;
 			color: #ffffff;
 			overflow-x: hidden;
+			background: var(--primary-dark);
 			-webkit-font-smoothing: antialiased;
 			-moz-osx-font-smoothing: grayscale;
-			background: #0a0a0f;
 		}
-		
-		/* Gaming Background with Parallax */
+
+		/* Dynamic Particle Background */
 		.gaming-bg {
-			background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #2d1b69 100%);
-			min-height: 100vh;
-			min-height: calc(var(--vh, 1vh) * 100);
-			position: relative;
-			overflow: hidden;
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 25%, #1a1a2e 50%, #0f3460 75%, #2d1b69 100%);
+			z-index: -3;
 		}
-		
+
 		.gaming-bg::before {
 			content: '';
 			position: fixed;
 			top: 0;
 			left: 0;
-			right: 0;
-			bottom: 0;
+			width: 100%;
+			height: 100%;
 			background: 
-				radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.4) 0%, transparent 60%),
-				radial-gradient(circle at 80% 20%, rgba(236, 72, 153, 0.4) 0%, transparent 60%),
-				radial-gradient(circle at 40% 40%, rgba(59, 130, 246, 0.3) 0%, transparent 60%);
-			pointer-events: none;
-			z-index: 1;
-			animation: backgroundShift 20s ease-in-out infinite;
+				radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.3) 0%, transparent 50%),
+				radial-gradient(circle at 80% 20%, rgba(236, 72, 153, 0.3) 0%, transparent 50%),
+				radial-gradient(circle at 40% 40%, rgba(34, 211, 238, 0.2) 0%, transparent 50%);
+			animation: gradientShift 20s ease-in-out infinite;
+			z-index: -2;
 		}
-		
+
 		.gaming-bg::after {
 			content: '';
 			position: fixed;
 			top: 0;
 			left: 0;
-			right: 0;
-			bottom: 0;
-			background: 
-				url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-			pointer-events: none;
-			z-index: 2;
+			width: 100%;
+			height: 100%;
+			background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.02)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+			z-index: -1;
 		}
-		
-		@keyframes backgroundShift {
+
+		@keyframes gradientShift {
 			0%, 100% { transform: translateX(0) translateY(0) scale(1); }
-			33% { transform: translateX(-20px) translateY(-10px) scale(1.05); }
-			66% { transform: translateX(20px) translateY(10px) scale(0.95); }
+			33% { transform: translateX(-30px) translateY(-20px) scale(1.1); }
+			66% { transform: translateX(30px) translateY(20px) scale(0.9); }
 		}
-		
-		/* Parallax scrolling elements */
-		.parallax-slow {
-			transform: translateY(0);
-			transition: transform 0.1s ease-out;
+
+		/* Particle System */
+		.particles {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			pointer-events: none;
+			z-index: -1;
 		}
-		
-		.parallax-fast {
-			transform: translateY(0);
-			transition: transform 0.1s ease-out;
+
+		.particle {
+			position: absolute;
+			width: 4px;
+			height: 4px;
+			background: var(--neon-purple);
+			border-radius: 50%;
+			opacity: 0.6;
+			animation: float 15s infinite linear;
 		}
-		
-		/* Enhanced Glassmorphism */
+
+		.particle:nth-child(2n) {
+			background: var(--neon-pink);
+			animation-duration: 20s;
+			animation-delay: -5s;
+		}
+
+		.particle:nth-child(3n) {
+			background: var(--neon-cyan);
+			animation-duration: 25s;
+			animation-delay: -10s;
+		}
+
+		@keyframes float {
+			0% {
+				transform: translateY(100vh) translateX(0) rotate(0deg);
+				opacity: 0;
+			}
+			10% {
+				opacity: 0.6;
+			}
+			90% {
+				opacity: 0.6;
+			}
+			100% {
+				transform: translateY(-100px) translateX(100px) rotate(360deg);
+				opacity: 0;
+			}
+		}
+
+		/* Ultra-Modern Glassmorphism */
 		.glass-card {
-			background: rgba(255, 255, 255, 0.08);
-			backdrop-filter: blur(25px);
-			-webkit-backdrop-filter: blur(25px);
-			border: 1px solid rgba(255, 255, 255, 0.15);
+			background: rgba(255, 255, 255, var(--glass-opacity));
+			backdrop-filter: blur(var(--blur-amount));
+			-webkit-backdrop-filter: blur(var(--blur-amount));
+			border: 1px solid rgba(255, 255, 255, 0.2);
 			box-shadow: 
-				0 8px 32px rgba(0, 0, 0, 0.4),
+				0 8px 32px rgba(0, 0, 0, 0.3),
 				inset 0 1px 0 rgba(255, 255, 255, 0.1);
 			position: relative;
 			z-index: 10;
 		}
-		
+
 		.glass-card::before {
 			content: '';
 			position: absolute;
@@ -111,10 +159,10 @@
 			border-radius: inherit;
 			pointer-events: none;
 		}
-		
-		/* Enhanced Gradient Buttons */
+
+		/* Neon Gradient Buttons */
 		.btn-gradient {
-			background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 50%, #f59e0b 100%);
+			background: linear-gradient(135deg, var(--neon-purple) 0%, var(--neon-pink) 50%, var(--neon-cyan) 100%);
 			background-size: 200% 200%;
 			transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 			position: relative;
@@ -128,7 +176,7 @@
 			justify-content: center;
 			gap: 8px;
 		}
-		
+
 		.btn-gradient::before {
 			content: '';
 			position: absolute;
@@ -136,171 +184,117 @@
 			left: -100%;
 			width: 100%;
 			height: 100%;
-			background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-			transition: left 0.5s;
+			background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+			transition: left 0.6s;
 		}
-		
+
 		.btn-gradient:hover {
-			transform: translateY(-3px) scale(1.02);
-			box-shadow: 0 15px 35px rgba(139, 92, 246, 0.5);
+			transform: translateY(-2px) scale(1.02);
+			box-shadow: 
+				0 10px 25px rgba(139, 92, 246, 0.4),
+				0 0 20px rgba(139, 92, 246, 0.3);
 			background-position: 100% 0;
 		}
-		
+
 		.btn-gradient:hover::before {
 			left: 100%;
 		}
-		
+
 		.btn-gradient:active {
-			transform: translateY(-1px) scale(0.98);
+			transform: translateY(0) scale(0.98);
 		}
-		
-		/* Enhanced Swipe Card Styles */
-		.swipe-card {
-			transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-			transform-origin: center;
-			cursor: grab;
-			user-select: none;
-			-webkit-user-select: none;
+
+		/* Neon Glow Effects */
+		.neon-glow {
+			box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
 		}
-		
-		.swipe-card:active {
-			cursor: grabbing;
+
+		.neon-glow:hover {
+			box-shadow: 0 0 20px rgba(139, 92, 246, 0.8);
 		}
-		
-		.swipe-card.swiping {
-			transition: none;
+
+		/* Gradient Text */
+		.gradient-text {
+			background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink), var(--neon-cyan));
+			background-size: 200% 200%;
+			-webkit-background-clip: text;
+			background-clip: text;
+			-webkit-text-fill-color: transparent;
+			animation: gradientShift 3s ease-in-out infinite;
 		}
-		
-		.swipe-card.like {
-			transform: translateX(120%) rotate(25deg) scale(0.8);
-			opacity: 0;
-		}
-		
-		.swipe-card.pass {
-			transform: translateX(-120%) rotate(-25deg) scale(0.8);
-			opacity: 0;
-		}
-		
-		/* Enhanced Action Buttons */
-		.btn-like {
-			background: linear-gradient(135deg, #ec4899 0%, #f97316 100%);
-			box-shadow: 0 6px 20px rgba(236, 72, 153, 0.5);
-			transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-			border: none;
-			cursor: pointer;
-		}
-		
-		.btn-like:hover {
-			transform: translateY(-2px) scale(1.05);
-			box-shadow: 0 8px 25px rgba(236, 72, 153, 0.6);
-		}
-		
-		.btn-pass {
-			background: linear-gradient(135deg, #6b7280 0%, #374151 100%);
-			box-shadow: 0 6px 20px rgba(107, 114, 128, 0.5);
-			transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-			border: none;
-			cursor: pointer;
-		}
-		
-		.btn-pass:hover {
-			transform: translateY(-2px) scale(1.05);
-			box-shadow: 0 8px 25px rgba(107, 114, 128, 0.6);
-		}
-		
-		/* Enhanced Toast Notifications */
-		.toast {
-			background: rgba(15, 15, 35, 0.95);
-			backdrop-filter: blur(25px);
-			border: 1px solid rgba(255, 255, 255, 0.15);
-			box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-			position: relative;
-			z-index: 1000;
-		}
-		
-		.toast.success {
-			border-left: 4px solid #10b981;
-			background: rgba(16, 185, 129, 0.1);
-		}
-		
-		.toast.error {
-			border-left: 4px solid #ef4444;
-			background: rgba(239, 68, 68, 0.1);
-		}
-		
-		.toast.info {
-			border-left: 4px solid #3b82f6;
-			background: rgba(59, 130, 246, 0.1);
-		}
-		
-		.toast.warning {
-			border-left: 4px solid #f59e0b;
-			background: rgba(245, 158, 11, 0.1);
-		}
-		
-		/* Enhanced Animations */
-		@keyframes slideUp {
-			from {
-				opacity: 0;
-				transform: translateY(30px);
-			}
-			to {
-				opacity: 1;
-				transform: translateY(0);
-			}
-		}
-		
-		@keyframes fadeIn {
-			from { 
-				opacity: 0;
-				transform: scale(0.95);
-			}
-			to { 
-				opacity: 1;
-				transform: scale(1);
-			}
-		}
-		
-		@keyframes pulse {
-			0%, 100% { transform: scale(1); }
-			50% { transform: scale(1.05); }
-		}
-		
-		@keyframes float {
-			0%, 100% { transform: translateY(0px); }
-			50% { transform: translateY(-10px); }
-		}
-		
-		.slide-up {
-			animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-		}
-		
+
+		/* Scroll-triggered Animations */
 		.fade-in {
-			animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+			opacity: 0;
+			transform: translateY(30px);
+			transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 		}
-		
-		.pulse {
-			animation: pulse 2s infinite;
+
+		.fade-in.visible {
+			opacity: 1;
+			transform: translateY(0);
 		}
-		
-		.float {
-			animation: float 3s ease-in-out infinite;
+
+		.slide-in-left {
+			opacity: 0;
+			transform: translateX(-50px);
+			transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 		}
-		
-		/* Enhanced Mobile Navigation */
+
+		.slide-in-left.visible {
+			opacity: 1;
+			transform: translateX(0);
+		}
+
+		.slide-in-right {
+			opacity: 0;
+			transform: translateX(50px);
+			transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+		}
+
+		.slide-in-right.visible {
+			opacity: 1;
+			transform: translateX(0);
+		}
+
+		.scale-in {
+			opacity: 0;
+			transform: scale(0.8);
+			transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+		}
+
+		.scale-in.visible {
+			opacity: 1;
+			transform: scale(1);
+		}
+
+		/* Hover Effects */
+		.hover-glow:hover {
+			box-shadow: 0 0 20px rgba(139, 92, 246, 0.6);
+			transform: translateY(-2px);
+		}
+
+		.hover-scale:hover {
+			transform: scale(1.05);
+		}
+
+		.hover-tilt:hover {
+			transform: perspective(1000px) rotateX(5deg) rotateY(5deg);
+		}
+
+		/* Mobile Navigation */
 		.mobile-nav {
 			position: fixed;
 			bottom: 0;
 			left: 0;
 			right: 0;
-			background: rgba(15, 15, 35, 0.95);
+			background: rgba(13, 13, 13, 0.95);
 			backdrop-filter: blur(25px);
-			border-top: 1px solid rgba(255, 255, 255, 0.15);
+			border-top: 1px solid rgba(255, 255, 255, 0.1);
 			z-index: 100;
 			padding-bottom: env(safe-area-inset-bottom);
-			box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.3);
 		}
-		
+
 		.mobile-nav-item {
 			position: relative;
 			transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -309,17 +303,17 @@
 			text-decoration: none;
 			color: inherit;
 		}
-		
+
 		.mobile-nav-item:hover {
-			background: rgba(255, 255, 255, 0.05);
+			background: rgba(139, 92, 246, 0.1);
 			transform: translateY(-2px);
 		}
-		
+
 		.mobile-nav-item.active {
-			color: #8b5cf6;
+			color: var(--neon-purple);
 			background: rgba(139, 92, 246, 0.1);
 		}
-		
+
 		.mobile-nav-item.active::before {
 			content: '';
 			position: absolute;
@@ -328,143 +322,12 @@
 			transform: translateX(-50%);
 			width: 6px;
 			height: 6px;
-			background: #8b5cf6;
+			background: var(--neon-purple);
 			border-radius: 50%;
 			box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
 		}
-		
-		/* Touch optimizations */
-		.touch-target {
-			min-height: 48px;
-			min-width: 48px;
-			-webkit-tap-highlight-color: transparent;
-		}
-		
-		/* Enhanced Mobile-specific styles */
-		@media (max-width: 768px) {
-			.desktop-nav { display: none; }
-			.mobile-nav { display: flex; }
-			
-			/* Adjust main content for mobile nav */
-			main {
-				padding-bottom: 120px;
-			}
-			
-			/* Enhanced touch targets */
-			.btn, .btn-gradient {
-				min-height: 52px;
-				padding: 14px 28px;
-				font-size: 16px;
-				font-weight: 600;
-			}
-			
-			/* Better spacing on mobile */
-			.glass-card {
-				margin: 0 8px;
-				border-radius: 20px;
-			}
-			
-			/* Swipe card mobile optimizations */
-			.swipe-card {
-				touch-action: pan-y;
-				-webkit-user-select: none;
-				user-select: none;
-				-webkit-touch-callout: none;
-			}
-			
-			/* Mobile typography */
-			h1 { font-size: 2.75rem; font-weight: 800; }
-			h2 { font-size: 2.25rem; font-weight: 700; }
-			h3 { font-size: 1.75rem; font-weight: 600; }
-			
-			/* Better mobile spacing */
-			.container {
-				padding-left: 16px;
-				padding-right: 16px;
-			}
-		}
-		
-		@media (min-width: 769px) {
-			.desktop-nav { display: flex; }
-			.mobile-nav { display: none; }
-		}
-		
-		/* Landscape mobile optimizations */
-		@media (max-width: 768px) and (orientation: landscape) {
-			.mobile-nav {
-				position: relative;
-				bottom: auto;
-				margin-top: 1rem;
-				border-radius: 20px;
-			}
-			
-			main {
-				padding-bottom: 1rem;
-			}
-		}
-		
-		/* Safe area support for notched devices */
-		@supports (padding: max(0px)) {
-			.mobile-nav {
-				padding-left: max(20px, env(safe-area-inset-left));
-				padding-right: max(20px, env(safe-area-inset-right));
-			}
-		}
-		
-		/* Enhanced Swipe Progress Bar */
-		.swipe-progress {
-			height: 6px;
-			background: rgba(255, 255, 255, 0.1);
-			border-radius: 3px;
-			overflow: hidden;
-			box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
-		}
-		
-		.swipe-progress-fill {
-			height: 100%;
-			background: linear-gradient(90deg, #8b5cf6 0%, #ec4899 50%, #f59e0b 100%);
-			border-radius: 3px;
-			transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-			box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
-		}
-		
-		/* Smooth scrolling */
-		html {
-			scroll-behavior: smooth;
-		}
-		
-		/* Custom scrollbar */
-		::-webkit-scrollbar {
-			width: 8px;
-		}
-		
-		::-webkit-scrollbar-track {
-			background: rgba(255, 255, 255, 0.05);
-		}
-		
-		::-webkit-scrollbar-thumb {
-			background: linear-gradient(135deg, #8b5cf6, #ec4899);
-			border-radius: 4px;
-		}
-		
-		::-webkit-scrollbar-thumb:hover {
-			background: linear-gradient(135deg, #7c3aed, #db2777);
-		}
-		
-		/* Navigation styles */
-		.nav-link {
-			text-decoration: none;
-			color: inherit;
-			transition: all 0.3s ease;
-			padding: 8px 16px;
-			border-radius: 8px;
-		}
-		
-		.nav-link:hover {
-			background: rgba(255, 255, 255, 0.05);
-		}
-		
-		/* Form styles */
+
+		/* Form Styles */
 		.form-input {
 			background: rgba(255, 255, 255, 0.05);
 			border: 1px solid rgba(255, 255, 255, 0.1);
@@ -475,41 +338,121 @@
 			transition: all 0.3s ease;
 			width: 100%;
 		}
-		
+
 		.form-input:focus {
 			outline: none;
-			border-color: #8b5cf6;
-			box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+			border-color: var(--neon-purple);
+			box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1), 0 0 20px rgba(139, 92, 246, 0.2);
 		}
-		
+
 		.form-input::placeholder {
 			color: rgba(255, 255, 255, 0.5);
 		}
-		
-		/* Legacy button classes for compatibility */
-		.btn-primary {
-			@apply btn-gradient;
+
+		/* Custom Scrollbar */
+		::-webkit-scrollbar {
+			width: 8px;
 		}
-		
-		.btn-secondary {
-			@apply border-2 border-white/10 rounded-xl bg-white/5 text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300;
+
+		::-webkit-scrollbar-track {
+			background: rgba(255, 255, 255, 0.05);
+		}
+
+		::-webkit-scrollbar-thumb {
+			background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink));
+			border-radius: 4px;
+		}
+
+		::-webkit-scrollbar-thumb:hover {
+			background: linear-gradient(135deg, var(--neon-pink), var(--neon-cyan));
+		}
+
+		/* Responsive Design */
+		@media (max-width: 768px) {
+			.desktop-nav { display: none; }
+			.mobile-nav { display: flex; }
+			
+			main {
+				padding-bottom: 120px;
+			}
+			
+			.btn-gradient {
+				min-height: 52px;
+				padding: 14px 28px;
+				font-size: 16px;
+			}
+			
+			.glass-card {
+				margin: 0 8px;
+				border-radius: 20px;
+			}
+			
+			/* Reduce particles on mobile */
+			.particle {
+				width: 2px;
+				height: 2px;
+			}
+		}
+
+		@media (min-width: 769px) {
+			.desktop-nav { display: flex; }
+			.mobile-nav { display: none; }
+		}
+
+		/* Performance Optimizations */
+		.gpu-accelerated {
+			transform: translateZ(0);
+			will-change: transform;
+		}
+
+		/* Toast Notifications */
+		.toast {
+			background: rgba(13, 13, 13, 0.95);
+			backdrop-filter: blur(25px);
+			border: 1px solid rgba(255, 255, 255, 0.15);
+			box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+			position: relative;
+			z-index: 1000;
+		}
+
+		.toast.success {
+			border-left: 4px solid #10b981;
+			background: rgba(16, 185, 129, 0.1);
+		}
+
+		.toast.error {
+			border-left: 4px solid #ef4444;
+			background: rgba(239, 68, 68, 0.1);
+		}
+
+		.toast.info {
+			border-left: 4px solid var(--neon-cyan);
+			background: rgba(34, 211, 238, 0.1);
+		}
+
+		.toast.warning {
+			border-left: 4px solid #f59e0b;
+			background: rgba(245, 158, 11, 0.1);
 		}
 	</style>
 </head>
 <body class="gaming-bg">
+	<!-- Particle System -->
+	<div class="particles" id="particles"></div>
+
 	<!-- Desktop Navigation -->
 	<nav class="desktop-nav fixed top-0 left-0 right-0 z-50 glass-card">
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 			<div class="flex justify-between items-center h-16">
 				<div class="flex items-center space-x-8">
-					<a href="{{ url_for('index') }}" class="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+					<a href="{{ url_for('index') }}" class="text-2xl font-bold gradient-text">
 						AnomiDate
 					</a>
 					<div class="hidden md:flex space-x-6">
-						<a href="{{ url_for('index') }}" class="nav-link">Dashboard</a>
-						<a href="{{ url_for('profile.view_profile') }}" class="nav-link">Profile</a>
-						<a href="{{ url_for('swipe.swipe_home') }}" class="nav-link">Swipe</a>
-						<a href="{{ url_for('matches.matches_list') }}" class="nav-link">Matches</a>
+						<a href="{{ url_for('index') }}" class="nav-link hover-glow px-4 py-2 rounded-lg transition-all duration-300">Dashboard</a>
+						<a href="{{ url_for('profile.view_profile') }}" class="nav-link hover-glow px-4 py-2 rounded-lg transition-all duration-300">Profile</a>
+						<a href="{{ url_for('swipe.swipe_home') }}" class="nav-link hover-glow px-4 py-2 rounded-lg transition-all duration-300">Swipe</a>
+						<a href="{{ url_for('matches.matches_list') }}" class="nav-link hover-glow px-4 py-2 rounded-lg transition-all duration-300">Matches</a>
 					</div>
 				</div>
 				<div class="flex items-center space-x-4">
@@ -518,7 +461,7 @@
 							Logout
 						</a>
 					{% else %}
-						<a href="{{ url_for('auth.login') }}" class="nav-link">Login</a>
+						<a href="{{ url_for('auth.login') }}" class="nav-link hover-glow px-4 py-2 rounded-lg transition-all duration-300">Login</a>
 						<a href="{{ url_for('auth.register') }}" class="btn-gradient px-6 py-2 rounded-lg">
 							Sign Up
 						</a>
@@ -531,19 +474,19 @@
 	<!-- Mobile Navigation -->
 	<nav class="mobile-nav">
 		<div class="flex justify-around py-3">
-			<a href="{{ url_for('index') }}" class="mobile-nav-item flex flex-col items-center p-3 text-gray-400 hover:text-white transition-colors touch-target">
+			<a href="{{ url_for('index') }}" class="mobile-nav-item flex flex-col items-center p-3 text-gray-400 hover:text-white transition-colors">
 				<i data-lucide="home" class="w-6 h-6"></i>
 				<span class="text-xs mt-1 font-medium">Home</span>
 			</a>
-			<a href="{{ url_for('swipe.swipe_home') }}" class="mobile-nav-item flex flex-col items-center p-3 text-gray-400 hover:text-white transition-colors touch-target">
+			<a href="{{ url_for('swipe.swipe_home') }}" class="mobile-nav-item flex flex-col items-center p-3 text-gray-400 hover:text-white transition-colors">
 				<i data-lucide="heart" class="w-6 h-6"></i>
 				<span class="text-xs mt-1 font-medium">Swipe</span>
 			</a>
-			<a href="{{ url_for('matches.matches_list') }}" class="mobile-nav-item flex flex-col items-center p-3 text-gray-400 hover:text-white transition-colors touch-target">
+			<a href="{{ url_for('matches.matches_list') }}" class="mobile-nav-item flex flex-col items-center p-3 text-gray-400 hover:text-white transition-colors">
 				<i data-lucide="users" class="w-6 h-6"></i>
 				<span class="text-xs mt-1 font-medium">Matches</span>
 			</a>
-			<a href="{{ url_for('profile.view_profile') }}" class="mobile-nav-item flex flex-col items-center p-3 text-gray-400 hover:text-white transition-colors touch-target">
+			<a href="{{ url_for('profile.view_profile') }}" class="mobile-nav-item flex flex-col items-center p-3 text-gray-400 hover:text-white transition-colors">
 				<i data-lucide="user" class="w-6 h-6"></i>
 				<span class="text-xs mt-1 font-medium">Profile</span>
 			</a>
@@ -555,7 +498,7 @@
 		{% if messages %}
 			<div class="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 space-y-2">
 				{% for category, message in messages %}
-					<div class="toast px-4 py-3 rounded-lg text-sm slide-up {{ category }}">
+					<div class="toast px-4 py-3 rounded-lg text-sm fade-in {{ category }}">
 						{{ message }}
 					</div>
 				{% endfor %}
@@ -573,21 +516,59 @@
 	<script>
 		// Initialize Lucide icons
 		lucide.createIcons();
-		
-		// Parallax scrolling effect
-		window.addEventListener('scroll', () => {
-			const scrolled = window.pageYOffset;
-			const parallaxElements = document.querySelectorAll('.parallax-slow, .parallax-fast');
+
+		// Particle System
+		function createParticles() {
+			const particlesContainer = document.getElementById('particles');
+			const particleCount = window.innerWidth <= 768 ? 30 : 60;
 			
-			parallaxElements.forEach(element => {
-				const speed = element.classList.contains('parallax-slow') ? 0.5 : 0.8;
-				const yPos = -(scrolled * speed);
-				element.style.transform = `translateY(${yPos}px)`;
+			for (let i = 0; i < particleCount; i++) {
+				const particle = document.createElement('div');
+				particle.className = 'particle';
+				particle.style.left = Math.random() * 100 + '%';
+				particle.style.animationDelay = Math.random() * 20 + 's';
+				particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+				particlesContainer.appendChild(particle);
+			}
+		}
+
+		// Scroll-triggered Animations
+		function initScrollAnimations() {
+			const observerOptions = {
+				threshold: 0.1,
+				rootMargin: '0px 0px -50px 0px'
+			};
+
+			const observer = new IntersectionObserver((entries) => {
+				entries.forEach(entry => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('visible');
+					}
+				});
+			}, observerOptions);
+
+			// Observe all animated elements
+			document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .scale-in').forEach(el => {
+				observer.observe(el);
 			});
-		});
-		
-		// Add active state to navigation links
-		document.addEventListener('DOMContentLoaded', function() {
+		}
+
+		// Parallax Scrolling
+		function initParallax() {
+			window.addEventListener('scroll', () => {
+				const scrolled = window.pageYOffset;
+				const parallaxElements = document.querySelectorAll('.parallax-slow, .parallax-fast');
+				
+				parallaxElements.forEach(element => {
+					const speed = element.classList.contains('parallax-slow') ? 0.5 : 0.8;
+					const yPos = -(scrolled * speed);
+					element.style.transform = `translateY(${yPos}px)`;
+				});
+			});
+		}
+
+		// Navigation Active States
+		function initNavigation() {
 			const currentPath = window.location.pathname;
 			const navLinks = document.querySelectorAll('.nav-link');
 			const mobileNavItems = document.querySelectorAll('.mobile-nav-item');
@@ -608,8 +589,10 @@
 					item.classList.add('active');
 				}
 			});
-			
-			// Mobile-specific optimizations
+		}
+
+		// Mobile Optimizations
+		function initMobileOptimizations() {
 			if (window.innerWidth <= 768) {
 				// Prevent zoom on input focus
 				const inputs = document.querySelectorAll('input, textarea, select');
@@ -622,7 +605,7 @@
 				});
 				
 				// Add touch feedback to buttons
-				const buttons = document.querySelectorAll('.btn, .btn-gradient, .mobile-nav-item, .btn-like, .btn-pass');
+				const buttons = document.querySelectorAll('.btn-gradient, .mobile-nav-item');
 				buttons.forEach(button => {
 					button.addEventListener('touchstart', function(e) {
 						e.preventDefault();
@@ -633,59 +616,30 @@
 						e.preventDefault();
 						this.style.transform = '';
 					}, { passive: false });
-					
-					button.addEventListener('touchcancel', function(e) {
-						e.preventDefault();
-						this.style.transform = '';
-					}, { passive: false });
 				});
 			}
-			
-			// Handle orientation change
-			window.addEventListener('orientationchange', function() {
-				setTimeout(() => {
-					// Recalculate viewport height for mobile browsers
-					const vh = window.innerHeight * 0.01;
-					document.documentElement.style.setProperty('--vh', `${vh}px`);
-				}, 100);
-			});
-			
-			// Set initial viewport height
-			const vh = window.innerHeight * 0.01;
-			document.documentElement.style.setProperty('--vh', `${vh}px`);
+		}
+
+		// Initialize everything
+		document.addEventListener('DOMContentLoaded', function() {
+			createParticles();
+			initScrollAnimations();
+			initParallax();
+			initNavigation();
+			initMobileOptimizations();
 		});
-		
-		// Prevent pull-to-refresh on mobile
-		document.addEventListener('touchstart', function(e) {
-			if (e.touches.length !== 1) return;
-			const touch = e.touches[0];
-			window.touchStartY = touch.clientY;
+
+		// Handle orientation change
+		window.addEventListener('orientationchange', function() {
+			setTimeout(() => {
+				const vh = window.innerHeight * 0.01;
+				document.documentElement.style.setProperty('--vh', `${vh}px`);
+			}, 100);
 		});
-		
-		document.addEventListener('touchmove', function(e) {
-			if (e.touches.length !== 1) return;
-			const touch = e.touches[0];
-			const touchY = touch.clientY;
-			const touchStartY = window.touchStartY;
-			
-			if (touchY > touchStartY && window.scrollY === 0) {
-				e.preventDefault();
-			}
-		}, { passive: false });
-		
-		// Smooth scroll for anchor links
-		document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-			anchor.addEventListener('click', function (e) {
-				e.preventDefault();
-				const target = document.querySelector(this.getAttribute('href'));
-				if (target) {
-					target.scrollIntoView({
-						behavior: 'smooth',
-						block: 'start'
-					});
-				}
-			});
-		});
+
+		// Set initial viewport height
+		const vh = window.innerHeight * 0.01;
+		document.documentElement.style.setProperty('--vh', `${vh}px`);
 	</script>
 	<script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>

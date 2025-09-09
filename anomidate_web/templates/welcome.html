@@ -3,18 +3,18 @@
 <!-- Hero Section -->
 <section class="min-h-screen flex items-center justify-center relative parallax-slow">
 	<div class="text-center z-10 max-w-6xl mx-auto px-4">
-		<h1 class="text-6xl md:text-8xl font-black mb-8 bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent fade-in leading-tight">
-			Find Your Gaming Partner
+		<h1 class="text-6xl md:text-8xl font-black mb-8 gradient-text fade-in leading-tight">
+			Find Your Gaming Partner in Anomic
 		</h1>
 		<h2 class="text-xl md:text-3xl text-gray-300 mb-12 fade-in leading-relaxed" style="animation-delay: 0.2s">
-			Connect, match, and play with verified Roblox players in Anomic
+			Connect, match, and play with verified Roblox players
 		</h2>
 		<div class="flex flex-col sm:flex-row gap-6 justify-center mb-16 fade-in" style="animation-delay: 0.4s">
-			<a href="{{ url_for('auth.register') }}" class="btn-gradient px-10 py-5 rounded-2xl text-xl font-bold pulse inline-flex items-center justify-center">
+			<a href="{{ url_for('auth.register') }}" class="btn-gradient px-10 py-5 rounded-2xl text-xl font-bold neon-glow hover-scale inline-flex items-center justify-center">
 				<i data-lucide="user-plus" class="w-6 h-6 mr-3"></i>
 				Get Started Free
 			</a>
-			<a href="{{ url_for('auth.login') }}" class="px-10 py-5 rounded-2xl text-xl font-bold border-2 border-white/20 hover:bg-white/10 hover:border-white/40 transition-all duration-300 inline-flex items-center justify-center">
+			<a href="{{ url_for('auth.login') }}" class="px-10 py-5 rounded-2xl text-xl font-bold border-2 border-white/20 hover:bg-white/10 hover:border-white/40 transition-all duration-300 inline-flex items-center justify-center hover-glow">
 				<i data-lucide="log-in" class="w-6 h-6 mr-3"></i>
 				I Already Have an Account
 			</a>
@@ -22,15 +22,15 @@
 		
 		<!-- Trust Badges -->
 		<div class="flex flex-wrap justify-center gap-8 text-sm text-gray-400 fade-in" style="animation-delay: 0.6s">
-			<div class="flex items-center gap-2">
+			<div class="flex items-center gap-2 hover-glow">
 				<i data-lucide="shield-check" class="w-5 h-5 text-green-400"></i>
 				<span>Roblox Verified</span>
 			</div>
-			<div class="flex items-center gap-2">
+			<div class="flex items-center gap-2 hover-glow">
 				<i data-lucide="lock" class="w-5 h-5 text-blue-400"></i>
 				<span>Private & Secure</span>
 			</div>
-			<div class="flex items-center gap-2">
+			<div class="flex items-center gap-2 hover-glow">
 				<i data-lucide="heart" class="w-5 h-5 text-pink-400"></i>
 				<span>Free to Use</span>
 			</div>
@@ -41,35 +41,35 @@
 <!-- Features Section -->
 <section class="py-20 parallax-fast">
 	<div class="max-w-6xl mx-auto">
-		<h2 class="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+		<h2 class="text-4xl md:text-5xl font-bold text-center mb-16 gradient-text fade-in">
 			Why Choose AnomiDate?
 		</h2>
 		
 		<div class="grid md:grid-cols-3 gap-8">
 			<!-- Feature 1 -->
-			<div class="glass-card rounded-3xl p-10 text-center float group hover:scale-105 transition-all duration-500">
-				<div class="w-20 h-20 bg-gradient-to-r from-green-500 to-blue-500 rounded-3xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300">
+			<div class="glass-card rounded-3xl p-10 text-center hover-tilt hover-glow transition-all duration-500 scale-in group">
+				<div class="w-20 h-20 bg-gradient-to-r from-green-500 to-blue-500 rounded-3xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300 neon-glow">
 					<i data-lucide="shield-check" class="w-10 h-10 text-white"></i>
 				</div>
-				<h3 class="text-3xl font-bold mb-6">Real Roblox Verification</h3>
+				<h3 class="text-3xl font-bold mb-6 gradient-text">Real Roblox Verification</h3>
 				<p class="text-gray-300 text-lg leading-relaxed">Connect your Roblox account securely. We verify every user to ensure authentic gaming connections.</p>
 			</div>
 			
 			<!-- Feature 2 -->
-			<div class="glass-card rounded-3xl p-10 text-center float group hover:scale-105 transition-all duration-500" style="animation-delay: 0.5s;">
-				<div class="w-20 h-20 bg-gradient-to-r from-purple-500 to-pink-500 rounded-3xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300">
+			<div class="glass-card rounded-3xl p-10 text-center hover-tilt hover-glow transition-all duration-500 scale-in group" style="animation-delay: 0.2s;">
+				<div class="w-20 h-20 bg-gradient-to-r from-purple-500 to-pink-500 rounded-3xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300 neon-glow">
 					<i data-lucide="heart" class="w-10 h-10 text-white"></i>
 				</div>
-				<h3 class="text-3xl font-bold mb-6">Smart Matching</h3>
+				<h3 class="text-3xl font-bold mb-6 gradient-text">Smart Matching</h3>
 				<p class="text-gray-300 text-lg leading-relaxed">Swipe through profiles based on playstyle, server preferences, and gaming compatibility.</p>
 			</div>
 			
 			<!-- Feature 3 -->
-			<div class="glass-card rounded-3xl p-10 text-center float group hover:scale-105 transition-all duration-500" style="animation-delay: 1s;">
-				<div class="w-20 h-20 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-3xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300">
+			<div class="glass-card rounded-3xl p-10 text-center hover-tilt hover-glow transition-all duration-500 scale-in group" style="animation-delay: 0.4s;">
+				<div class="w-20 h-20 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-3xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300 neon-glow">
 					<i data-lucide="gamepad-2" class="w-10 h-10 text-white"></i>
 				</div>
-				<h3 class="text-3xl font-bold mb-6">Gaming-Focused</h3>
+				<h3 class="text-3xl font-bold mb-6 gradient-text">Gaming-Focused</h3>
 				<p class="text-gray-300 text-lg leading-relaxed">Built specifically for gamers. Find your perfect duo for Anomic and other Roblox games.</p>
 			</div>
 		</div>
@@ -79,32 +79,32 @@
 <!-- How It Works Section -->
 <section class="py-20 parallax-slow">
 	<div class="max-w-6xl mx-auto text-center">
-		<h2 class="text-5xl font-bold mb-16 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+		<h2 class="text-5xl font-bold mb-16 gradient-text fade-in">
 			How It Works
 		</h2>
 		
 		<div class="grid md:grid-cols-3 gap-12">
-			<div class="text-center group">
-				<div class="w-24 h-24 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-8 text-3xl font-bold group-hover:scale-110 transition-transform duration-300 shadow-2xl">
+			<div class="text-center group slide-in-left">
+				<div class="w-24 h-24 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-8 text-3xl font-bold group-hover:scale-110 transition-transform duration-300 neon-glow">
 					1
 				</div>
-				<h3 class="text-2xl font-bold mb-6">Create Your Profile</h3>
+				<h3 class="text-2xl font-bold mb-6 gradient-text">Create Your Profile</h3>
 				<p class="text-gray-300 text-lg leading-relaxed">Set up your gaming profile with playstyle, server preferences, and bio.</p>
 			</div>
 			
-			<div class="text-center group">
-				<div class="w-24 h-24 bg-gradient-to-r from-pink-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-8 text-3xl font-bold group-hover:scale-110 transition-transform duration-300 shadow-2xl">
+			<div class="text-center group slide-in-left" style="animation-delay: 0.2s;">
+				<div class="w-24 h-24 bg-gradient-to-r from-pink-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-8 text-3xl font-bold group-hover:scale-110 transition-transform duration-300 neon-glow">
 					2
 				</div>
-				<h3 class="text-2xl font-bold mb-6">Verify with Roblox</h3>
+				<h3 class="text-2xl font-bold mb-6 gradient-text">Verify with Roblox</h3>
 				<p class="text-gray-300 text-lg leading-relaxed">Connect your Roblox account to verify your identity and unlock all features.</p>
 			</div>
 			
-			<div class="text-center group">
-				<div class="w-24 h-24 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-8 text-3xl font-bold group-hover:scale-110 transition-transform duration-300 shadow-2xl">
+			<div class="text-center group slide-in-left" style="animation-delay: 0.4s;">
+				<div class="w-24 h-24 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-8 text-3xl font-bold group-hover:scale-110 transition-transform duration-300 neon-glow">
 					3
 				</div>
-				<h3 class="text-2xl font-bold mb-6">Start Swiping</h3>
+				<h3 class="text-2xl font-bold mb-6 gradient-text">Start Swiping</h3>
 				<p class="text-gray-300 text-lg leading-relaxed">Discover compatible players, match, and start gaming together!</p>
 			</div>
 		</div>
@@ -114,14 +114,14 @@
 <!-- CTA Section -->
 <section class="py-20 parallax-fast">
 	<div class="max-w-6xl mx-auto text-center">
-		<div class="glass-card rounded-3xl p-16">
-			<h2 class="text-4xl md:text-5xl font-bold mb-8 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+		<div class="glass-card rounded-3xl p-16 hover-glow">
+			<h2 class="text-4xl md:text-5xl font-bold mb-8 gradient-text fade-in">
 				Ready to Find Your Gaming Duo?
 			</h2>
-			<p class="text-2xl text-gray-300 mb-12 leading-relaxed">
+			<p class="text-2xl text-gray-300 mb-12 leading-relaxed fade-in" style="animation-delay: 0.2s">
 				Join thousands of verified Roblox players looking for their perfect gaming partner.
 			</p>
-			<a href="{{ url_for('auth.register') }}" class="btn-gradient px-12 py-6 rounded-2xl text-2xl font-bold inline-flex items-center justify-center gap-4">
+			<a href="{{ url_for('auth.register') }}" class="btn-gradient px-12 py-6 rounded-2xl text-2xl font-bold inline-flex items-center justify-center gap-4 neon-glow hover-scale fade-in" style="animation-delay: 0.4s">
 				<i data-lucide="rocket" class="w-8 h-8"></i>
 				Start Your Journey
 			</a>
@@ -133,47 +133,47 @@
 <footer class="py-12 border-t border-gray-800">
 	<div class="max-w-6xl mx-auto px-4">
 		<div class="grid md:grid-cols-4 gap-8">
-			<div>
+			<div class="fade-in">
 				<div class="flex items-center space-x-2 mb-4">
-					<div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+					<div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center neon-glow">
 						<span class="text-white font-bold text-lg">A</span>
 					</div>
-					<span class="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">AnomiDate</span>
+					<span class="text-xl font-bold gradient-text">AnomiDate</span>
 				</div>
 				<p class="text-gray-400 text-sm">
 					The ultimate platform for Roblox gamers to find their perfect gaming partner.
 				</p>
 			</div>
 			
-			<div>
-				<h3 class="font-semibold mb-4">Product</h3>
+			<div class="fade-in" style="animation-delay: 0.1s;">
+				<h3 class="font-semibold mb-4 gradient-text">Product</h3>
 				<ul class="space-y-2 text-sm text-gray-400">
-					<li><a href="#" class="hover:text-white transition-colors">Features</a></li>
-					<li><a href="#" class="hover:text-white transition-colors">Pricing</a></li>
-					<li><a href="#" class="hover:text-white transition-colors">Safety</a></li>
+					<li><a href="#" class="hover:text-white transition-colors hover-glow">Features</a></li>
+					<li><a href="#" class="hover:text-white transition-colors hover-glow">Pricing</a></li>
+					<li><a href="#" class="hover:text-white transition-colors hover-glow">Safety</a></li>
 				</ul>
 			</div>
 			
-			<div>
-				<h3 class="font-semibold mb-4">Support</h3>
+			<div class="fade-in" style="animation-delay: 0.2s;">
+				<h3 class="font-semibold mb-4 gradient-text">Support</h3>
 				<ul class="space-y-2 text-sm text-gray-400">
-					<li><a href="#" class="hover:text-white transition-colors">Help Center</a></li>
-					<li><a href="#" class="hover:text-white transition-colors">Contact Us</a></li>
-					<li><a href="#" class="hover:text-white transition-colors">Community</a></li>
+					<li><a href="#" class="hover:text-white transition-colors hover-glow">Help Center</a></li>
+					<li><a href="#" class="hover:text-white transition-colors hover-glow">Contact Us</a></li>
+					<li><a href="#" class="hover:text-white transition-colors hover-glow">Community</a></li>
 				</ul>
 			</div>
 			
-			<div>
-				<h3 class="font-semibold mb-4">Legal</h3>
+			<div class="fade-in" style="animation-delay: 0.3s;">
+				<h3 class="font-semibold mb-4 gradient-text">Legal</h3>
 				<ul class="space-y-2 text-sm text-gray-400">
-					<li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
-					<li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
-					<li><a href="#" class="hover:text-white transition-colors">Cookie Policy</a></li>
+					<li><a href="#" class="hover:text-white transition-colors hover-glow">Privacy Policy</a></li>
+					<li><a href="#" class="hover:text-white transition-colors hover-glow">Terms of Service</a></li>
+					<li><a href="#" class="hover:text-white transition-colors hover-glow">Cookie Policy</a></li>
 				</ul>
 			</div>
 		</div>
 		
-		<div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
+		<div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400 fade-in" style="animation-delay: 0.4s">
 			<p>&copy; 2024 AnomiDate. All rights reserved.</p>
 		</div>
 	</div>

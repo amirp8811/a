@@ -2,70 +2,91 @@
 {% block content %}
 <div class="max-w-md mx-auto px-4">
 	<!-- Swipe Progress Bar -->
-	<div class="mb-6">
+	<div class="mb-6 fade-in">
 		<div class="flex items-center justify-between text-sm text-gray-400 mb-2">
 			<span>Swipes Today</span>
 			<span>0 / 50</span>
 		</div>
-		<div class="swipe-progress">
-			<div class="swipe-progress-fill" style="width: 0%"></div>
+		<div class="h-6 bg-gray-800 rounded-full overflow-hidden">
+			<div class="swipe-progress-fill h-full bg-gradient-to-r from-purple-500 via-pink-500 to-cyan-500 rounded-full transition-all duration-500" style="width: 0%"></div>
 		</div>
 	</div>
 
 	<!-- Swipe Card Container -->
 	<div class="relative h-96 mb-8">
-		<div id="swipeCard" class="swipe-card glass-card rounded-2xl p-6 md:p-8 h-full flex flex-col justify-between cursor-grab touch-target">
+		<div id="swipeCard" class="swipe-card glass-card rounded-3xl p-8 h-full flex flex-col justify-between cursor-grab hover-glow transition-all duration-300">
 			<!-- User Info -->
-			<div class="text-center">
-				<div class="w-24 h-24 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
+			<div class="text-center fade-in">
+				<div class="w-24 h-24 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4 neon-glow">
 					<i data-lucide="user" class="w-12 h-12 text-white"></i>
 				</div>
 				<h3 class="text-2xl font-bold text-white mb-2">GamerName123</h3>
-				<div class="flex items-center justify-center space-x-4 text-sm text-gray-400 mb-4">
-					<span>Age: 18</span>
-					<span>•</span>
-					<span>Male</span>
+				<p class="text-gray-400 mb-4">Level 45 • Anomic Player</p>
+				<div class="flex flex-wrap justify-center gap-2 mb-4">
+					<span class="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm">Competitive</span>
+					<span class="px-3 py-1 bg-pink-500/20 text-pink-300 rounded-full text-sm">Team Player</span>
+					<span class="px-3 py-1 bg-cyan-500/20 text-cyan-300 rounded-full text-sm">Active Daily</span>
 				</div>
-				<p class="text-gray-300 text-center mb-4">
-					"Looking for a duo to dominate Anomic! I'm a skilled player who loves strategy and teamwork. Let's climb the leaderboards together! 🎮"
+				<p class="text-gray-300 text-sm leading-relaxed">
+					"Looking for a reliable duo to dominate Anomic servers. I'm all about strategy and having fun!"
 				</p>
-			</div>
-
-			<!-- Gaming Info -->
-			<div class="space-y-3">
-				<div class="flex items-center space-x-2">
-					<i data-lucide="gamepad-2" class="w-4 h-4 text-purple-400"></i>
-					<span class="text-sm text-gray-300">Playstyle: Competitive</span>
-				</div>
-				<div class="flex items-center space-x-2">
-					<i data-lucide="server" class="w-4 h-4 text-blue-400"></i>
-					<span class="text-sm text-gray-300">Servers: US East, US West</span>
-				</div>
-				<div class="flex items-center space-x-2">
-					<i data-lucide="clock" class="w-4 h-4 text-green-400"></i>
-					<span class="text-sm text-gray-300">Online: Now</span>
-				</div>
 			</div>
 		</div>
 	</div>
 
 	<!-- Action Buttons -->
-	<div class="flex justify-center space-x-8 mb-6">
-		<button id="passBtn" class="w-16 h-16 md:w-20 md:h-20 btn-pass rounded-full flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-200 touch-target">
-			<i data-lucide="x" class="w-8 h-8 md:w-10 md:h-10"></i>
+	<div class="flex justify-center space-x-8 mb-6 fade-in" style="animation-delay: 0.2s;">
+		<button id="passBtn" class="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-r from-gray-600 to-gray-800 rounded-full flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-200 neon-glow hover-glow">
+			<i data-lucide="x" class="w-8 h-8 md:w-10 md:h-10 text-white"></i>
 		</button>
-		<button id="likeBtn" class="w-16 h-16 md:w-20 md:h-20 btn-like rounded-full flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-200 touch-target">
+		<button id="likeBtn" class="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-r from-pink-500 to-red-500 rounded-full flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-200 neon-glow hover-glow">
 			<i data-lucide="heart" class="w-8 h-8 md:w-10 md:h-10 text-white"></i>
 		</button>
 	</div>
 
 	<!-- Instructions -->
-	<div class="text-center text-sm text-gray-400">
+	<div class="text-center text-sm text-gray-400 fade-in" style="animation-delay: 0.3s;">
 		<p class="hidden md:block">Drag the card left to pass or right to like</p>
 		<p class="md:hidden">Swipe left to pass or right to like</p>
 		<p class="mt-1">Or use the buttons above</p>
 	</div>
 </div>
+
+<style>
+	.swipe-card {
+		transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+		transform-origin: center;
+		cursor: grab;
+		user-select: none;
+		-webkit-user-select: none;
+		perspective: 1000px;
+	}
+
+	.swipe-card:active {
+		cursor: grabbing;
+	}
+
+	.swipe-card.swiping {
+		transition: none;
+	}
+
+	.swipe-card.like {
+		transform: translateX(120%) rotate(25deg) scale(0.8);
+		opacity: 0;
+		box-shadow: 0 20px 40px rgba(236, 72, 153, 0.4);
+	}
+
+	.swipe-card.pass {
+		transform: translateX(-120%) rotate(-25deg) scale(0.8);
+		opacity: 0;
+		box-shadow: 0 20px 40px rgba(107, 114, 128, 0.4);
+	}
+
+	.swipe-progress-fill {
+		background: linear-gradient(90deg, #8b5cf6 0%, #ec4899 50%, #22d3ee 100%);
+		box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+	}
+</style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -75,8 +96,8 @@ document.addEventListener('DOMContentLoaded', function() {
 	
 	let isDragging = false;
 	let startX = 0;
-	let currentX = 0;
 	let startY = 0;
+	let currentX = 0;
 	let currentY = 0;
 	let initialTransform = '';
 	
@@ -108,8 +129,6 @@ document.addEventListener('DOMContentLoaded', function() {
 	card.addEventListener('mousemove', handleMove);
 	card.addEventListener('mouseup', handleEnd);
 	card.addEventListener('mouseleave', handleEnd);
-	
-	// Button events (removed duplicate handlers)
 	
 	function handleStart(e) {
 		isDragging = true;
@@ -144,21 +163,19 @@ document.addEventListener('DOMContentLoaded', function() {
 		
 		const deltaX = currentX - startX;
 		const deltaY = currentY - startY;
-		const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+		const rotation = deltaX * 0.1;
+		const opacity = Math.max(0.3, 1 - Math.abs(deltaX) / 200);
 		
-		if (distance > 10) {
-			const angle = deltaX * 0.1;
-			const opacity = Math.max(0.3, 1 - distance / 300);
-			
-			card.style.transform = `translate(${deltaX}px, ${deltaY}px) rotate(${angle}deg)`;
-			card.style.opacity = opacity;
-			
-			// Change cursor based on direction
-			if (deltaX > 50) {
-				card.style.cursor = 'grabbing';
-			} else if (deltaX < -50) {
-				card.style.cursor = 'grabbing';
-			}
+		card.style.transform = `translateX(${deltaX}px) translateY(${deltaY}px) rotate(${rotation}deg)`;
+		card.style.opacity = opacity;
+		
+		// Add glow effect based on direction
+		if (deltaX > 50) {
+			card.style.boxShadow = '0 20px 40px rgba(236, 72, 153, 0.3)';
+		} else if (deltaX < -50) {
+			card.style.boxShadow = '0 20px 40px rgba(107, 114, 128, 0.3)';
+		} else {
+			card.style.boxShadow = '';
 		}
 	}
 	
@@ -169,27 +186,19 @@ document.addEventListener('DOMContentLoaded', function() {
 		card.classList.remove('swiping');
 		
 		const deltaX = currentX - startX;
-		const deltaY = currentY - startY;
-		const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+		const threshold = 100;
 		
-		// Reset if not swiped far enough
-		if (distance < 100) {
-			card.style.transform = initialTransform;
-			card.style.opacity = '1';
-			card.style.cursor = 'grab';
-			return;
-		}
-		
-		// Determine swipe direction
-		if (deltaX > 100) {
-			swipeCard('like');
-		} else if (deltaX < -100) {
-			swipeCard('pass');
+		if (Math.abs(deltaX) > threshold) {
+			if (deltaX > 0) {
+				swipeCard('like');
+			} else {
+				swipeCard('pass');
+			}
 		} else {
-			// Reset if not clear direction
+			// Snap back
 			card.style.transform = initialTransform;
 			card.style.opacity = '1';
-			card.style.cursor = 'grab';
+			card.style.boxShadow = '';
 		}
 	}
 	
@@ -220,6 +229,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			card.classList.remove('like', 'pass');
 			card.style.transform = '';
 			card.style.opacity = '1';
+			card.style.boxShadow = '';
 			card.style.cursor = 'grab';
 			
 			// In a real app, you'd load the next card here
@@ -229,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	
 	function showToast(message, type) {
 		const toast = document.createElement('div');
-		toast.className = `toast px-4 py-3 rounded-lg text-sm slide-up fixed top-20 left-1/2 transform -translate-x-1/2 z-50`;
+		toast.className = `toast px-4 py-3 rounded-lg text-sm slide-up fixed top-20 left-1/2 transform -translate-x-1/2 z-50 ${type}`;
 		toast.textContent = message;
 		document.body.appendChild(toast);
 		
